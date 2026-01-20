@@ -2,8 +2,9 @@
 
 This document summarizes the progress, features, and UI/UX enhancements implemented for the RoadWolf Coach Booking application.
 
-## 🚀 Current Status: **Production Ready (MVP)**
+## 🚀 Current Status: **Production Ready (MVP)** - `v0.1.0`
 The application has a fully functional booking journey from search to ticket confirmation, with a refined, modern UI.
+See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ---
 

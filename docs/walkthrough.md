@@ -1,34 +1,43 @@
-# Walkthrough - Scroll Animations
+# Walkthrough - Responsive Booking Flow
 
-I have added "animate on scroll" effects to the landing page (`HomePage.tsx`) using Framer Motion. The animations enhance the user experience by revealing content as the user scrolls down.
+This document details the recent updates to the Booking Journey, focusing on achieving a "Fluid & Native-Like" experience across all devices.
 
-## Changes
+## 📱 Mobile-First Enhancements
 
-### Landing Page Animations
+### 1. Fluid Seat Grid (Step 2)
+The **Seat Selection Page** now uses a dynamic 5-column CSS grid.
+- **Why?** To ensure seats are always perfectly sized and tappable, regardless of the screen width (360px to 430px+).
+- **Result:** No horizontal scrolling is required to view the entire bus width.
 
-I updated `src/app/pages/HomePage.tsx` to include the `motion` component from `framer-motion`.
+### 2. "No-Scroll" Interface
+We solved the issue of double scrollbars (page scroll + element scroll) by restructuring the mobile layout:
+- **Sticky Footer:** The Booking Summary (Price & Continue Button) is now fixed to the bottom of the screen.
+- **Hidden Sidebar:** The desktop summary sidebar is hidden on mobile to maximize space for the main content (Seat Map or Passenger Forms).
 
-- **Features Section**: The "Why Choose Us?" title and the feature cards now fade in and slide up as they enter the viewport.
-- **Amenities Section**: The "Onboard Amenities" section and its grid items animate in sequence.
-- **Testimonials Section**: The "Passenger Stories" section and individual testimonial cards now have a smooth entrance animation.
+### 3. Mobile Confirmation Modal
+To maintain context without clutter:
+- When a user taps "Continue" on the Seat Selection page (Mobile), a **Confirmation Modal** slides up.
+- It displays the full trip details (Route, Date, Seats, Price) for a final check.
+- Users confirm again to proceed, ensuring accuracy.
 
-The animations use a staggered effect (`staggerChildren`) so that items in a grid appear one after another rather than all at once, creating a more polished feel.
+### 4. Smart Passenger Forms (Step 3)
+The **Passenger Info Page** also received the sticky footer treatment.
+- The "Continue to Payment" button is always visible at the bottom.
+- Clicking it triggers the form validation logic. If fields are missing (e.g., Name, ID), the browser automatically focuses on them.
 
-## Verification Results
+## 🖥️ Desktop Enhancements
 
-### Build Verification
-Ran `npm run build` to verify that the changes compile correctly.
-- **Result**: Build successful using `vite build`.
-- **Output**:
-  ```
-  vite v6.3.5 building for production...
-  ✓ 2096 modules transformed.
-  ✓ built in 3.06s
-  ```
+- **Hover Tooltips:** Moving the mouse over a seat now reveals a sleek black tooltip with details (Seat Number, Window/Aisle, Price).
+- **Sticky Sidebar:** The Booking Summary remains visible on the right side as the user scrolls through the seat map or forms.
+- **Animations:** All new elements (modals, footers) use smooth `animate-in` transitions.
 
-### Manual Verification
-To experience the animations:
-1. Run `npm run dev`.
-2. Open the application in your browser.
-3. Scroll down the entry page.
-4. Observe the elements drifting up and fading in as you reach each section.
+## ✅ Verification
+
+| Feature | Mobile Behavior | Desktop Behavior |
+| :--- | :--- | :--- |
+| **Seat Map** | One-hand friendly, auto-sizing grid | Comfortable buttons with hover effects |
+| **Summary** | **Fixed Bottom Bar** (Collapsed info) | **Right Sidebar** (Full details) |
+| **Navigation** | "Continue" opens **Modal** (Step 2) | "Continue" navigates directly |
+| **Forms** | Full-width inputs, Sticky Submit | 2-Column Layout, Sidebar Submit |
+
+These changes ensure `RoadWolf` feels like a progressive web app (PWA), offering the best possible interaction model for the device being used.

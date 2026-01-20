@@ -50,13 +50,13 @@ export default function PassengerInfoPage() {
     const contactFilled = contactDetails.email && contactDetails.phone;
 
     if (allPassengersFilled && contactFilled) {
-      navigate('/booking/payment', { 
-        state: { 
+      navigate('/booking/payment', {
+        state: {
           selectedSeats,
           bookingDetails,
           passengers,
           contactDetails
-        } 
+        }
       });
     }
   };
@@ -80,12 +80,12 @@ export default function PassengerInfoPage() {
         <div className="container mx-auto px-4">
           <BookingSteps currentStep={3} />
 
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-24 lg:mb-0">
+
             {/* LEFT COLUMN: Forms */}
             <div className="lg:col-span-2 animate-in fade-in slide-in-from-left-4 duration-700">
               <form id="passenger-form" onSubmit={handleSubmit} className="space-y-8">
-                
+
                 {/* Contact Details Card */}
                 <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-8">
                   <div className="flex items-center space-x-3 mb-6 border-b border-slate-100 pb-4">
@@ -150,7 +150,7 @@ export default function PassengerInfoPage() {
                             Passenger {index + 1}
                           </h2>
                           <div className="flex items-center text-xs font-bold text-[#e96f30] bg-orange-50 px-2 py-0.5 rounded w-fit mt-1">
-                             Seat {passenger.seatNumber}
+                            Seat {passenger.seatNumber}
                           </div>
                         </div>
                       </div>
@@ -196,105 +196,123 @@ export default function PassengerInfoPage() {
               </form>
             </div>
 
-            {/* RIGHT COLUMN: Booking Summary (Sticky) */}
-            <div className="lg:col-span-1 animate-in fade-in slide-in-from-right-4 duration-700 delay-100">
+            {/* RIGHT COLUMN: Booking Summary (Desktop Sidebar) */}
+            <div className="lg:col-span-1 hidden lg:block animate-in fade-in slide-in-from-right-4 duration-700 delay-100">
               <div className="sticky top-24 space-y-4">
-                
+
                 {/* Summary Card */}
                 <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
                   <div className="p-6 pb-0">
                     <h3 className="font-['Montserrat',sans-serif] font-bold text-xl text-[#01257d]">Booking Summary</h3>
                     <div className="h-1 w-12 bg-[#e96f30] mt-2 rounded-full" />
                   </div>
-                  
+
                   <div className="p-6 space-y-6">
                     {/* Route Info */}
                     <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                            <MapPin className="text-[#e96f30] shrink-0 mt-0.5" size={18} />
-                            <div>
-                                <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Travel Route</p>
-                                <div className="font-semibold text-slate-800">
-                                    {bookingDetails.from} <span className="text-[#01257d] mx-1">→</span> {bookingDetails.to}
-                                </div>
-                            </div>
+                      <div className="flex items-start gap-3">
+                        <MapPin className="text-[#e96f30] shrink-0 mt-0.5" size={18} />
+                        <div>
+                          <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Travel Route</p>
+                          <div className="font-semibold text-slate-800">
+                            {bookingDetails.from} <span className="text-[#01257d] mx-1">→</span> {bookingDetails.to}
+                          </div>
                         </div>
+                      </div>
 
-                        <div className="flex items-start gap-3">
-                            <Calendar className="text-[#e96f30] shrink-0 mt-0.5" size={18} />
-                            <div>
-                                <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Travel Date</p>
-                                <div className="font-semibold text-slate-800">
-                                    {(() => {
-                                      try {
-                                        const d = new Date(bookingDetails.date);
-                                        return isNaN(d.getTime()) ? 'Select Date' : d.toLocaleDateString('en-GB', { 
-                                            day: 'numeric', 
-                                            month: 'long', 
-                                            year: 'numeric' 
-                                        });
-                                      } catch (e) {
-                                        return 'Select Date';
-                                      }
-                                    })()}
-                                </div>
-                            </div>
+                      <div className="flex items-start gap-3">
+                        <Calendar className="text-[#e96f30] shrink-0 mt-0.5" size={18} />
+                        <div>
+                          <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Travel Date</p>
+                          <div className="font-semibold text-slate-800">
+                            {(() => {
+                              try {
+                                const d = new Date(bookingDetails.date);
+                                return isNaN(d.getTime()) ? 'Select Date' : d.toLocaleDateString('en-GB', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric'
+                                });
+                              } catch (e) {
+                                return 'Select Date';
+                              }
+                            })()}
+                          </div>
                         </div>
+                      </div>
                     </div>
 
                     <div className="h-px bg-slate-100" />
 
                     {/* Seat Details */}
                     <div>
-                        <div className="flex justify-between items-center mb-3">
-                            <span className="text-slate-600 font-semibold text-sm">Selected Seats</span>
-                            <span className="bg-[#01257d] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                                {selectedSeats.length}
-                            </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                            {selectedSeats.sort((a,b) => a-b).map(seat => (
-                                <span key={seat} className="text-xs font-bold bg-slate-50 border border-slate-200 text-[#01257d] px-3 py-1.5 rounded-lg">
-                                    Seat {seat}
-                                </span>
-                            ))}
-                        </div>
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-slate-600 font-semibold text-sm">Selected Seats</span>
+                        <span className="bg-[#01257d] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                          {selectedSeats.length}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedSeats.sort((a, b) => a - b).map(seat => (
+                          <span key={seat} className="text-xs font-bold bg-slate-50 border border-slate-200 text-[#01257d] px-3 py-1.5 rounded-lg">
+                            Seat {seat}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="h-px bg-slate-100" />
 
                     {/* Price Calculation */}
                     <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                         <div className="flex justify-between text-xs text-slate-500 font-medium">
-                            <span>Base Fare ({selectedSeats.length} x {formatPrice(PRICE_PER_SEAT)})</span>
-                            <span>{formatPrice(selectedSeats.length * PRICE_PER_SEAT)}</span>
-                         </div>
-                         <div className="flex justify-between items-center pt-2 border-t border-slate-200 mt-2">
-                            <span className="font-bold text-[#01257d]">Total Amount</span>
-                            <span className="font-bold text-[#e96f30] text-2xl">
-                                {formatPrice(selectedSeats.length * PRICE_PER_SEAT)}
-                            </span>
-                         </div>
+                      <div className="flex justify-between text-xs text-slate-500 font-medium">
+                        <span>Base Fare ({selectedSeats.length} x {formatPrice(PRICE_PER_SEAT)})</span>
+                        <span>{formatPrice(selectedSeats.length * PRICE_PER_SEAT)}</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2 border-t border-slate-200 mt-2">
+                        <span className="font-bold text-[#01257d]">Total Amount</span>
+                        <span className="font-bold text-[#e96f30] text-2xl">
+                          {formatPrice(selectedSeats.length * PRICE_PER_SEAT)}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Action Button */}
                     <button
-                        type="submit"
-                        form="passenger-form"
-                        className="w-full bg-[#042880] hover:bg-[#012275] text-white font-['Montserrat',sans-serif] font-bold text-base px-6 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2 group"
+                      type="submit"
+                      form="passenger-form"
+                      className="w-full bg-[#042880] hover:bg-[#012275] text-white font-['Montserrat',sans-serif] font-bold text-base px-6 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2 group"
                     >
-                        <span>Continue to Payment</span>
-                        <ChevronRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                      <span>Continue to Payment</span>
+                      <ChevronRight className="group-hover:translate-x-1 transition-transform" size={20} />
                     </button>
-                    
-                     <p className="text-xs text-center text-slate-400">
-                        Secure SSL Encryption
+
+                    <p className="text-xs text-center text-slate-400">
+                      Secure SSL Encryption
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky Footer */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.1)] lg:hidden z-50 animate-in slide-in-from-bottom-full duration-500">
+        <div className="flex items-center justify-between gap-4 max-w-md mx-auto">
+          <div>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total Amount</p>
+            <p className="text-[#e96f30] font-bold text-2xl leading-none">{formatPrice(selectedSeats.length * PRICE_PER_SEAT)}</p>
+          </div>
+          <button
+            type="submit"
+            form="passenger-form"
+            className="flex-grow bg-[#042880] active:bg-[#012275] text-white font-['Montserrat',sans-serif] font-bold text-sm py-3.5 rounded-xl shadow-lg flex items-center justify-center space-x-2"
+          >
+            <span>Continue</span>
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
     </div>

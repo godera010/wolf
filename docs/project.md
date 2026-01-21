@@ -27,4 +27,4 @@ RoadWolf is a modern coach booking application built with React, Vite, and TypeS
 
 ## Project Status
 
-The project is currently in the development/prototyping phase, featuring imports from Figma designs and a responsive implementation of the core booking user journeys.
+The project has reached **v0.2.0 (Polished MVP)**. It features a fully responsive booking journey with mobile-first verification flows (`src/app`) and specific design implementations derived from Figma.

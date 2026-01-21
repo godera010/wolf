@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingSteps from '../components/BookingSteps';
-import { User, Mail, Phone, CreditCard, MapPin, Calendar, ChevronRight, Info } from 'lucide-react';
+import { User, Mail, Phone, CreditCard, MapPin, Calendar, ChevronRight, Info, X } from 'lucide-react';
 
 interface Passenger {
   seatNumber: number;
@@ -37,10 +37,23 @@ export default function PassengerInfoPage() {
     phone: ''
   });
 
+  const [showMobileConfirm, setShowMobileConfirm] = useState(false);
+
   const handlePassengerChange = (index: number, field: keyof Passenger, value: string) => {
     const updatedPassengers = [...passengers];
     updatedPassengers[index] = { ...updatedPassengers[index], [field]: value };
     setPassengers(updatedPassengers);
+  };
+
+  const proceedToPayment = () => {
+    navigate('/booking/payment', {
+      state: {
+        selectedSeats,
+        bookingDetails,
+        passengers,
+        contactDetails
+      }
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -50,14 +63,11 @@ export default function PassengerInfoPage() {
     const contactFilled = contactDetails.email && contactDetails.phone;
 
     if (allPassengersFilled && contactFilled) {
-      navigate('/booking/payment', {
-        state: {
-          selectedSeats,
-          bookingDetails,
-          passengers,
-          contactDetails
-        }
-      });
+      if (window.innerWidth < 1024) {
+        setShowMobileConfirm(true);
+      } else {
+        proceedToPayment();
+      }
     }
   };
 
@@ -80,14 +90,14 @@ export default function PassengerInfoPage() {
         <div className="container mx-auto px-4">
           <BookingSteps currentStep={3} />
 
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-24 lg:mb-0">
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-24 lg:mb-0">
 
             {/* LEFT COLUMN: Forms */}
             <div className="lg:col-span-2 animate-in fade-in slide-in-from-left-4 duration-700">
               <form id="passenger-form" onSubmit={handleSubmit} className="space-y-8">
 
                 {/* Contact Details Card */}
-                <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-8">
+                <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6 md:p-7">
                   <div className="flex items-center space-x-3 mb-6 border-b border-slate-100 pb-4">
                     <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-[#01257d]">
                       <Mail size={20} />
@@ -149,7 +159,7 @@ export default function PassengerInfoPage() {
                           <h2 className="font-['Montserrat',sans-serif] font-bold text-lg text-[#01257d]">
                             Passenger {index + 1}
                           </h2>
-                          <div className="flex items-center text-xs font-bold text-[#e96f30] bg-orange-50 px-2 py-0.5 rounded w-fit mt-1">
+                          <div className="flex items-center text-xs font-bold text-[#e96f30] bg-orange-50 px-3 py-1 rounded-full w-fit mt-1.5 border border-orange-100">
                             Seat {passenger.seatNumber}
                           </div>
                         </div>
@@ -158,7 +168,7 @@ export default function PassengerInfoPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="font-['Montserrat',sans-serif] font-medium text-xs uppercase tracking-wider text-slate-500 mb-2 block">
+                        <label className="font-['Montserrat',sans-serif] font-bold text-sm text-slate-700 mb-2 block">
                           Full Name
                         </label>
                         <div className="relative group">
@@ -168,14 +178,14 @@ export default function PassengerInfoPage() {
                             value={passenger.fullName}
                             onChange={(e) => handlePassengerChange(index, 'fullName', e.target.value)}
                             placeholder="Name as on ID"
-                            className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl font-['Montserrat',sans-serif] text-sm focus:outline-none focus:ring-2 focus:ring-[#e96f30]/20 focus:border-[#e96f30] transition-all"
+                            className="w-full pl-12 pr-4 py-3 bg-white border border-slate-300 rounded-xl font-['Montserrat',sans-serif] text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e96f30]/20 focus:border-[#e96f30] transition-all shadow-sm"
                             required
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="font-['Montserrat',sans-serif] font-medium text-xs uppercase tracking-wider text-slate-500 mb-2 block">
+                        <label className="font-['Montserrat',sans-serif] font-bold text-sm text-slate-700 mb-2 block">
                           ID / Passport Number
                         </label>
                         <div className="relative group">
@@ -185,7 +195,7 @@ export default function PassengerInfoPage() {
                             value={passenger.idNumber}
                             onChange={(e) => handlePassengerChange(index, 'idNumber', e.target.value)}
                             placeholder="ID Number"
-                            className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl font-['Montserrat',sans-serif] text-sm focus:outline-none focus:ring-2 focus:ring-[#e96f30]/20 focus:border-[#e96f30] transition-all"
+                            className="w-full pl-12 pr-4 py-3 bg-white border border-slate-300 rounded-xl font-['Montserrat',sans-serif] text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e96f30]/20 focus:border-[#e96f30] transition-all shadow-sm"
                             required
                           />
                         </div>
@@ -202,12 +212,12 @@ export default function PassengerInfoPage() {
 
                 {/* Summary Card */}
                 <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
-                  <div className="p-6 pb-0">
+                  <div className="p-5 pb-0">
                     <h3 className="font-['Montserrat',sans-serif] font-bold text-xl text-[#01257d]">Booking Summary</h3>
                     <div className="h-1 w-12 bg-[#e96f30] mt-2 rounded-full" />
                   </div>
 
-                  <div className="p-6 space-y-6">
+                  <div className="p-5 space-y-5">
                     {/* Route Info */}
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
@@ -264,7 +274,7 @@ export default function PassengerInfoPage() {
                     <div className="h-px bg-slate-100" />
 
                     {/* Price Calculation */}
-                    <div className="space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div className="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
                       <div className="flex justify-between text-xs text-slate-500 font-medium">
                         <span>Base Fare ({selectedSeats.length} x {formatPrice(PRICE_PER_SEAT)})</span>
                         <span>{formatPrice(selectedSeats.length * PRICE_PER_SEAT)}</span>
@@ -315,6 +325,70 @@ export default function PassengerInfoPage() {
           </button>
         </div>
       </div>
+      {/* Mobile Confirmation Modal */}
+      {showMobileConfirm && (
+        <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={() => setShowMobileConfirm(false)} />
+
+          <div className="relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom-full duration-300">
+            {/* Header */}
+            <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
+              <h3 className="font-['Montserrat',sans-serif] font-bold text-base text-[#01257d]">Review Details</h3>
+              <button onClick={() => setShowMobileConfirm(false)} className="p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+              <div>
+                <p className="text-xs text-slate-500 uppercase tracking-wider font-bold mb-2">Passengers</p>
+                <div className="space-y-3">
+                  {passengers.map((p, idx) => (
+                    <div key={idx} className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-sm">
+                      <div className="flex justify-between items-start mb-1">
+                        <span className="font-bold text-slate-700">{p.fullName}</span>
+                        <span className="text-[10px] font-bold text-[#01257d] bg-blue-100/50 px-2 py-0.5 rounded">Seat {p.seatNumber}</span>
+                      </div>
+                      <div className="text-slate-500 text-xs">ID: {p.idNumber}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs text-slate-500 uppercase tracking-wider font-bold mb-2">Contact</p>
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-sm space-y-1">
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Mail size={14} className="text-slate-400" />
+                    <span className="truncate">{contactDetails.email}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Phone size={14} className="text-slate-400" />
+                    <span>{contactDetails.phone}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                <span className="font-bold text-[#01257d]">Total Amount</span>
+                <span className="font-bold text-[#e96f30] text-xl">{formatPrice(selectedSeats.length * PRICE_PER_SEAT)}</span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="p-4 border-t border-slate-100 bg-white rounded-b-2xl">
+              <button
+                onClick={proceedToPayment}
+                className="w-full bg-[#042880] active:bg-[#012275] text-white font-['Montserrat',sans-serif] font-bold text-sm py-3.5 rounded-xl shadow-lg flex items-center justify-center space-x-2"
+              >
+                <span>Confirm & Pay</span>
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -104,7 +104,7 @@ export default function SeatSelectionPage() {
 
             {/* LEFT COLUMN: Seat Map */}
             <div className="lg:col-span-2 animate-in fade-in slide-in-from-left-4 duration-700 pb-32 lg:pb-0">
-              <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-4 sm:p-6 mb-4 lg:mb-0">
+              <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-4 sm:p-5 mb-4 lg:mb-0">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="font-['Montserrat',sans-serif] font-bold text-lg text-[#01257d]">
                     Select Your Seats

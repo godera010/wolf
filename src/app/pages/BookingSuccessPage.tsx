@@ -6,9 +6,10 @@ import imgLogo from "@/assets/a306ff2bd95bbfb239ff7e9d8b26c60f646d26e4.png";
 export default function BookingSuccessPage() {
   const location = useLocation();
   const state = location.state || {};
-  
+
   // Robustly handle missing or null data
-  const ticketId = state.ticketId;
+  const tickets = state.tickets || [];
+  const ticketId = state.ticketId; // Fallback for legacy
   const passengerInfo = state.passengerInfo || { fullName: 'Guest' };
   const selectedSeats = state.selectedSeats || [];
   const amount = state.amount || 0;
@@ -26,7 +27,7 @@ export default function BookingSuccessPage() {
     }
   };
 
-  if (!ticketId) {
+  if (!tickets.length && !ticketId) {
     return (
       <div className="bg-white flex flex-col items-center justify-center p-4 flex-grow">
         <p className="text-gray-600 mb-4">No ticket information found.</p>
@@ -35,10 +36,17 @@ export default function BookingSuccessPage() {
     );
   }
 
+  // Normalize tickets array if coming from legacy single ID
+  const displayTickets = tickets.length > 0 ? tickets : [{
+    id: ticketId,
+    passengerName: passengerInfo.fullName,
+    seatNumber: selectedSeats.join(', '),
+  }];
+
   return (
     <div className="bg-slate-50 relative overflow-hidden flex-grow flex flex-col">
-       {/* Background Decor */}
-       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl opacity-60" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-orange-100/40 rounded-full blur-3xl opacity-60" />
       </div>
@@ -58,80 +66,84 @@ export default function BookingSuccessPage() {
               Your ticket has been successfully generated. A copy has been sent to your email.
             </p>
 
-            {/* Ticket Card - Designed like a Boarding Pass */}
-            <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden text-left mb-12 relative max-w-2xl mx-auto border border-slate-100">
-              {/* Top Section (Color Strip) */}
-              <div className="bg-[#01257d] p-8 text-white relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-                 <div className="relative z-10 flex justify-between items-start">
-                    <div>
-                        <img 
-                            src={imgLogo} 
-                            alt="RoadWolf" 
-                            className="h-10 w-auto object-contain brightness-0 invert opacity-90 mb-4"
+            {/* Ticket Cards Loop */}
+            <div className="space-y-8 mb-12">
+              {displayTickets.map((ticket: any, index: number) => (
+                <div key={ticket.id || index} className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden text-left relative max-w-2xl mx-auto border border-slate-100">
+                  {/* Top Section (Color Strip) */}
+                  <div className="bg-[#01257d] p-8 text-white relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+                    <div className="relative z-10 flex justify-between items-start">
+                      <div>
+                        <img
+                          src={imgLogo}
+                          alt="RoadWolf"
+                          className="h-10 w-auto object-contain brightness-0 invert opacity-90 mb-4"
                         />
-                         <div className="flex items-center space-x-3 text-white/80">
-                            <span className="font-bold text-xl">{bookingDetails?.from || 'Harare'}</span>
-                            <div className="flex flex-col items-center px-2">
-                                <span className="text-[10px] uppercase tracking-widest opacity-60 mb-0.5">Route</span>
-                                <div className="w-24 h-0.5 bg-white/30 relative">
-                                    <div className="absolute right-0 -top-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
-                                    <div className="absolute left-0 -top-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
-                                </div>
+                        <div className="flex items-center space-x-3 text-white/80">
+                          <span className="font-bold text-xl">{bookingDetails?.from || 'Harare'}</span>
+                          <div className="flex flex-col items-center px-2">
+                            <span className="text-[10px] uppercase tracking-widest opacity-60 mb-0.5">Route</span>
+                            <div className="w-24 h-0.5 bg-white/30 relative">
+                              <div className="absolute right-0 -top-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
+                              <div className="absolute left-0 -top-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
                             </div>
-                            <span className="font-bold text-xl">{bookingDetails?.to || 'Bulawayo'}</span>
-                         </div>
+                          </div>
+                          <span className="font-bold text-xl">{bookingDetails?.to || 'Bulawayo'}</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs uppercase tracking-widest opacity-60 mb-1">Boarding Pass</p>
+                        <p className="font-mono text-2xl font-bold text-[#e96f30] tracking-wider">{ticket.id}</p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                         <p className="text-xs uppercase tracking-widest opacity-60 mb-1">Boarding Pass</p>
-                         <p className="font-mono text-2xl font-bold text-[#e96f30] tracking-wider">{ticketId}</p>
-                    </div>
-                 </div>
-              </div>
+                  </div>
 
-              {/* Middle Section (Cutouts) */}
-              <div className="relative bg-white h-8 w-full flex items-center justify-between">
-                  <div className="w-4 h-8 bg-slate-50 rounded-r-full absolute left-0 border-y border-r border-slate-100"></div>
-                  <div className="w-full border-b-2 border-dashed border-slate-200 mx-6"></div>
-                  <div className="w-4 h-8 bg-slate-50 rounded-l-full absolute right-0 border-y border-l border-slate-100"></div>
-              </div>
+                  {/* Middle Section (Cutouts) */}
+                  <div className="relative bg-white h-8 w-full flex items-center justify-between">
+                    <div className="w-4 h-8 bg-slate-50 rounded-r-full absolute left-0 border-y border-r border-slate-100"></div>
+                    <div className="w-full border-b-2 border-dashed border-slate-200 mx-6"></div>
+                    <div className="w-4 h-8 bg-slate-50 rounded-l-full absolute right-0 border-y border-l border-slate-100"></div>
+                  </div>
 
-              {/* Bottom Section (Details) */}
-              <div className="p-8 pt-4 bg-white">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                     <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><User size={12}/> Passenger</p>
-                        <p className="font-bold text-slate-800 text-sm md:text-base truncate">{passengerInfo.fullName}</p>
-                     </div>
-                     <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><Calendar size={12}/> Date</p>
+                  {/* Bottom Section (Details) */}
+                  <div className="p-8 pt-4 bg-white">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                      <div>
+                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><User size={12} /> Passenger</p>
+                        <p className="font-bold text-slate-800 text-sm md:text-base truncate">{ticket.passengerName}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><Calendar size={12} /> Date</p>
                         <p className="font-bold text-slate-800 text-sm md:text-base">
-                             {formatDate(bookingDetails?.date)}
+                          {formatDate(bookingDetails?.date)}
                         </p>
-                     </div>
-                     <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><Clock size={12}/> Time</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><Clock size={12} /> Time</p>
                         <p className="font-bold text-slate-800 text-sm md:text-base">08:00 AM</p>
-                     </div>
-                     <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold">Seat(s)</p>
-                        <p className="font-bold text-[#e96f30] text-sm md:text-base">{selectedSeats.join(', ')}</p>
-                     </div>
-                </div>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold">Seat</p>
+                        <p className="font-bold text-[#e96f30] text-sm md:text-base">{ticket.seatNumber}</p>
+                      </div>
+                    </div>
 
-                <div className="bg-slate-50 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-100">
-                    <div className="text-center md:text-left">
+                    <div className="bg-slate-50 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-100">
+                      <div className="text-center md:text-left">
                         <p className="text-xs text-slate-500 mb-1">Please show this barcode at the terminal</p>
                         <p className="text-[10px] text-slate-400">Gate closes 15 mins before departure</p>
+                      </div>
+                      {/* Barcode Visual */}
+                      <div className="h-12 flex items-center gap-1 px-4 bg-white rounded border border-slate-200">
+                        {[...Array(20)].map((_, i) => (
+                          <div key={i} className={`h-full w-[2px] ${Math.random() > 0.5 ? 'bg-slate-800' : 'bg-transparent'} ${Math.random() > 0.8 ? 'w-[4px]' : ''}`}></div>
+                        ))}
+                      </div>
                     </div>
-                    {/* Barcode Visual */}
-                    <div className="h-12 flex items-center gap-1 px-4 bg-white rounded border border-slate-200">
-                         {[...Array(20)].map((_, i) => (
-                             <div key={i} className={`h-full w-[2px] ${Math.random() > 0.5 ? 'bg-slate-800' : 'bg-transparent'} ${Math.random() > 0.8 ? 'w-[4px]' : ''}`}></div>
-                         ))}
-                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
 
             {/* Actions */}
@@ -145,12 +157,12 @@ export default function BookingSuccessPage() {
                 <span>Download PDF</span>
               </button>
             </div>
-            
+
             <div className="mt-8">
-                <Link to="/" className="inline-flex items-center text-[#e96f30] hover:text-[#d55f26] font-medium transition-colors">
-                    <ChevronRight className="rotate-180 mr-1" size={16} />
-                    Back to Home
-                </Link>
+              <Link to="/" className="inline-flex items-center text-[#e96f30] hover:text-[#d55f26] font-medium transition-colors">
+                <ChevronRight className="rotate-180 mr-1" size={16} />
+                Back to Home
+              </Link>
             </div>
           </div>
         </div>

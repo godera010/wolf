@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import BookingSteps from '../components/BookingSteps';
+
 import { CheckCircle, Download, Printer, ChevronRight, MapPin, Calendar, User, Clock } from 'lucide-react';
 import imgLogo from "@/assets/a306ff2bd95bbfb239ff7e9d8b26c60f646d26e4.png";
 
@@ -53,9 +53,19 @@ export default function BookingSuccessPage() {
 
       <div className="flex-grow relative z-10 py-8">
         <div className="container mx-auto px-4">
-          <BookingSteps currentStep={5} />
 
-          <div className="max-w-3xl mx-auto mt-12 text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="flex justify-between items-center mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
+            <Link to="/" className="inline-flex items-center text-slate-500 hover:text-[#e96f30] font-bold text-xs uppercase tracking-widest transition-colors">
+              <ChevronRight className="rotate-180 mr-1.5" size={14} strokeWidth={3} />
+              Return Home
+            </Link>
+            <div className="px-3 py-1 bg-green-50 border border-green-100 rounded-full flex items-center gap-1.5">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-[10px] uppercase font-black text-green-700 tracking-wider">Payment Verified</span>
+            </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
             <div className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-8 shadow-lg shadow-green-100/50 ring-8 ring-green-50">
               <CheckCircle className="w-12 h-12 text-green-600" strokeWidth={3} />
             </div>
@@ -69,77 +79,129 @@ export default function BookingSuccessPage() {
             {/* Ticket Cards Loop */}
             <div className="space-y-8 mb-12">
               {displayTickets.map((ticket: any, index: number) => (
-                <div key={ticket.id || index} className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden text-left relative max-w-2xl mx-auto border border-slate-100">
-                  {/* Top Section (Color Strip) */}
-                  <div className="bg-[#01257d] p-8 text-white relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-                    <div className="relative z-10 flex justify-between items-start">
-                      <div>
-                        <img
-                          src={imgLogo}
-                          alt="RoadWolf"
-                          className="h-10 w-auto object-contain brightness-0 invert opacity-90 mb-4"
-                        />
-                        <div className="flex items-center space-x-3 text-white/80">
-                          <span className="font-bold text-xl">{bookingDetails?.from || 'Harare'}</span>
-                          <div className="flex flex-col items-center px-2">
-                            <span className="text-[10px] uppercase tracking-widest opacity-60 mb-0.5">Route</span>
-                            <div className="w-24 h-0.5 bg-white/30 relative">
-                              <div className="absolute right-0 -top-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
-                              <div className="absolute left-0 -top-0.5 w-1.5 h-1.5 bg-white rounded-full"></div>
+                <div key={ticket.id || index} className="flex flex-col bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200 max-w-xl mx-auto group hover:shadow-[0_30px_70px_-15px_rgba(0,0,0,0.2)] transition-all duration-500 animate-in zoom-in-95 duration-700 delay-500 font-['Montserrat',sans-serif]">
+
+                  {/* Blue Header Section */}
+                  <div className="bg-[#01257d] p-5 px-8 flex items-center justify-between relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                    <div className="flex items-center space-x-4 relative z-10">
+                      <img
+                        src={imgLogo}
+                        alt="RoadWolf Logo"
+                        className="h-8 w-auto object-contain brightness-0 invert"
+                      />
+                      <div className="h-5 w-[1px] bg-white/20 hidden sm:block"></div>
+                      <span className="text-white/90 text-[11px] font-bold uppercase tracking-[0.2em] hidden sm:block">
+                        Premium Boarding Pass
+                      </span>
+                    </div>
+                    <div className="text-[#e96f30] text-[10px] font-black uppercase tracking-[0.3em] relative z-10">
+                      {ticket.id || 'TICKET'}
+                    </div>
+                  </div>
+
+                  {/* Main Body with Watermark */}
+                  <div className="p-5 relative flex-grow flex flex-col">
+
+                    {/* Brand Watermark (Faded Silhouette) */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden select-none">
+                      <img
+                        src={imgLogo}
+                        alt=""
+                        className="w-[75%] opacity-[0.04] grayscale"
+                      />
+                    </div>
+                    {/* Content Section (Luxury Stack Design) */}
+                    <div className="relative z-10">
+                      <div className="flex flex-col gap-4">
+
+                        {/* Row 1: Route */}
+                        <div className="border-b border-slate-100 pb-4">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em]">Origin</span>
+                            <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em]">Destination</span>
+                          </div>
+                          <div className="flex items-center justify-between gap-4">
+                            <div className="flex flex-col flex-1 text-left items-start">
+                              <span className="text-2xl md:text-3xl font-black text-[#01257d] uppercase leading-none tracking-tight">{bookingDetails?.from || 'Origin'}</span>
+                              <span className="text-[9px] text-[#01257d]/60 font-bold uppercase tracking-wider mt-1">Origin Point</span>
+                            </div>
+
+                            <div className="flex items-center justify-center">
+                              <ChevronRight className="text-[#e96f30]" size={32} strokeWidth={4} />
+                            </div>
+
+                            <div className="flex flex-col flex-1 text-right items-end">
+                              <span className="text-2xl md:text-3xl font-black text-[#01257d] uppercase leading-none tracking-tight">{bookingDetails?.to || 'Destination'}</span>
+                              <span className="text-[9px] text-[#01257d]/60 font-bold uppercase tracking-wider mt-1">Destination Point</span>
                             </div>
                           </div>
-                          <span className="font-bold text-xl">{bookingDetails?.to || 'Bulawayo'}</span>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs uppercase tracking-widest opacity-60 mb-1">Boarding Pass</p>
-                        <p className="font-mono text-2xl font-bold text-[#e96f30] tracking-wider">{ticket.id}</p>
+
+                        {/* Row 2: Passenger & Seat (Luxury Style) */}
+                        <div className="border-b border-slate-100 pb-4">
+                          <div className="flex items-end justify-between">
+                            <div className="text-left items-start flex flex-col">
+                              <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em] block mb-1">Passenger Name :</span>
+                              <span className="text-xl font-bold text-slate-800 tracking-tight">{ticket.passengerName}</span>
+                            </div>
+                            <div className="text-right items-end flex flex-col">
+                              <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em] block mb-0.5">Seat No. :</span>
+                              <span className="text-3xl font-black text-[#e96f30]">{ticket.seatNumber}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Row 3: Travel Date & Time */}
+                        <div className="pb-2">
+                          <div className="flex items-end justify-between">
+                            <div className="text-left items-start flex flex-col">
+                              <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em] block mb-1">Travel Date :</span>
+                              <span className="text-lg font-bold text-slate-800">{formatDate(bookingDetails?.date)}</span>
+                            </div>
+                            <div className="text-right items-end flex flex-col">
+                              <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em] block mb-1">Departure :</span>
+                              <span className="text-lg font-bold text-slate-800">08:00 AM</span>
+                            </div>
+                          </div>
+                        </div>
+                        {/* Ticket Cutoff / Perforation */}
+                        <div className="relative flex items-center justify-center -mx-6 my-2">
+                          <div className="absolute left-0 w-3 h-6 bg-slate-50 rounded-r-full shadow-inner"></div>
+                          <div className="w-full h-[1px] border-t-2 border-dashed border-slate-100 mx-3"></div>
+                          <div className="absolute right-0 w-3 h-6 bg-slate-50 rounded-l-full shadow-inner"></div>
+                        </div>
+
+                        {/* Row 4: Price */}
+                        <div className="border-b border-slate-100 pb-4 relative">
+                          <div className="flex items-center justify-between relative z-10">
+                            <span className="text-[10px] uppercase font-bold text-[#01257d] tracking-[0.2em]">Total Fare</span>
+                            <span className="text-3xl font-black text-[#01257d] tracking-tight">$30.00</span>
+                          </div>
+                        </div>
+
+                        {/* Row 5: Barcode */}
+                        <div className="pt-4">
+                          <div className="flex flex-col items-center gap-4">
+                            <div className="h-14 w-full flex items-end justify-center gap-[2px] opacity-80 group-hover:opacity-100 transition-opacity px-6">
+                              {[...Array(70)].map((_, i) => (
+                                <div key={i} className={`bg-slate-900 ${i % 7 === 0 ? 'w-[3.5px]' : i % 3 === 0 ? 'w-[2px]' : 'w-[1px]'} ${i % 5 === 0 ? 'h-full' : 'h-[85%]'}`}></div>
+                              ))}
+                            </div>
+                            <span className="text-[10px] font-mono text-slate-500 tracking-[0.8em] uppercase font-bold">{ticket.id || 'RW-OFFICIAL'}</span>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   </div>
 
-                  {/* Middle Section (Cutouts) */}
-                  <div className="relative bg-white h-8 w-full flex items-center justify-between">
-                    <div className="w-4 h-8 bg-slate-50 rounded-r-full absolute left-0 border-y border-r border-slate-100"></div>
-                    <div className="w-full border-b-2 border-dashed border-slate-200 mx-6"></div>
-                    <div className="w-4 h-8 bg-slate-50 rounded-l-full absolute right-0 border-y border-l border-slate-100"></div>
-                  </div>
-
-                  {/* Bottom Section (Details) */}
-                  <div className="p-8 pt-4 bg-white">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                      <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><User size={12} /> Passenger</p>
-                        <p className="font-bold text-slate-800 text-sm md:text-base truncate">{ticket.passengerName}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><Calendar size={12} /> Date</p>
-                        <p className="font-bold text-slate-800 text-sm md:text-base">
-                          {formatDate(bookingDetails?.date)}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold flex items-center gap-1"><Clock size={12} /> Time</p>
-                        <p className="font-bold text-slate-800 text-sm md:text-base">08:00 AM</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wider mb-1 font-bold">Seat</p>
-                        <p className="font-bold text-[#e96f30] text-sm md:text-base">{ticket.seatNumber}</p>
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-50 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-100">
-                      <div className="text-center md:text-left">
-                        <p className="text-xs text-slate-500 mb-1">Please show this barcode at the terminal</p>
-                        <p className="text-[10px] text-slate-400">Gate closes 15 mins before departure</p>
-                      </div>
-                      {/* Barcode Visual */}
-                      <div className="h-12 flex items-center gap-1 px-4 bg-white rounded border border-slate-200">
-                        {[...Array(20)].map((_, i) => (
-                          <div key={i} className={`h-full w-[2px] ${Math.random() > 0.5 ? 'bg-slate-800' : 'bg-transparent'} ${Math.random() > 0.8 ? 'w-[4px]' : ''}`}></div>
-                        ))}
-                      </div>
+                  {/* Gradient Footer Strip */}
+                  <div className="bg-[#e96f30] p-3 px-8 flex justify-between items-center text-[10px] text-white font-bold tracking-[0.2em] uppercase">
+                    <span className="opacity-90">roadwolfcoaches.co.zw</span>
+                    <div className="flex items-center gap-4">
+                      <span className="opacity-80 font-medium">Support:</span>
+                      <span className="text-white">0783 133 420</span>
                     </div>
                   </div>
                 </div>
@@ -158,12 +220,7 @@ export default function BookingSuccessPage() {
               </button>
             </div>
 
-            <div className="mt-8">
-              <Link to="/" className="inline-flex items-center text-[#e96f30] hover:text-[#d55f26] font-medium transition-colors">
-                <ChevronRight className="rotate-180 mr-1" size={16} />
-                Back to Home
-              </Link>
-            </div>
+
           </div>
         </div>
       </div>

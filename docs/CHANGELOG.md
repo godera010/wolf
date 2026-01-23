@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2026-01-23
+
+### Changed
+- **Luxury Ticket Redesign (`BookingSuccessPage`):**
+  - **Unified Card Layout:** Merged the separate "Passenger Copy" and "Stub" into a single, cohesive "Premium Boarding Pass" card.
+  - **5-Row Stack Structure:** Reorganized ticket details into a clean vertical stack:
+    1.  **Route:** High-contrast Origin/Destination with a bold Chevron divider and sub-labels.
+    2.  **Passenger & Seat:** Combined row with left-aligned details and a prominent orange seat number.
+    3.  **Travel Date & Time:** Left-aligned formatting with explicit labels (e.g., "Departure :").
+    4.  **Perforation:** Added a realistic CSS-based perforation line with semi-circle notches.
+    5.  **Footer:** Total Fare and a stretched, high-density barcode row.
+  - **Visual Polish:**
+    - Applied **Montserrat** font family for a premium feel.
+    - Updated color palette to brand standards: Dark Blue (`#01257d`) and Orange (`#e96f30`).
+    - Added a centered, non-rotated watermark for a balanced background.
+    - Removed clutter (icons, "Confirmed" stamps, extra boarding details) for a minimalist, text-focused design.
+
+## [0.2.1] - 2026-01-23
+
+### Added
+- **Success Page Animations:**
+  - Staggered entrance animations for the "Booking Confirmed" message and ticket cards.
+  - "Payment Verified" status indicator with heartbeat pulse in the header.
+- **Header Navigation:** Added "Return Home" breadcrumb link at the top of the success page for better space utilization.
+
+### Removed
+- **Progress Bar:** Removed redundant `BookingSteps` component from the success page to focus on the final confirmation/receipt state.
+
+### Fixed
+- **Code Cleanliness:** Removed unused imports and legacy layout wrappers in `BookingSuccessPage`.
+
 ## [0.2.0] - 2026-01-21
 
 ### Added

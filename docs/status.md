@@ -2,8 +2,8 @@
 
 This document summarizes the progress, features, and UI/UX enhancements implemented for the RoadWolf Coach Booking application.
 
-## 🚀 Current Status: **Polished V2 (Mobile & Desktop)** - `v0.2.0`
-The application has a robust, production-grade booking journey with advanced mobile verification flows and a refined desktop experience.
+## 🚀 Current Status: **Ticket Design Refinement** - `v0.2.2`
+The application has a robust, production-grade booking journey with a newly polished, luxury ticket design.
 See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ---
@@ -47,9 +47,15 @@ See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
     - **Processing State:** Full-screen animation overlay during payment simulation.
     - **Compact Cards:** Refined desktop layout.
 - **Confirmation (Step 5):**
-    - Premium "Boarding Pass" style ticket.
+    - **Luxury Ticket Redesign (v0.2.2):** 
+        - Unified "Premium Boarding Pass" single-card layout.
+        - Clean 5-row vertical stack (Route, Passenger, Date/Time, Price, Barcode).
+        - High-end visual details: Perforation notches, centered watermark, and "Montserrat" typography.
+        - Strict brand color compliance (Dark Blue/Orange).
     - Unique Ticket ID generation per passenger.
     - Multi-ticket stacked view.
+    - Staggered entrance animations.
+    - Top-level "Return Home" navigation.
 
 ### **3. Content Pages**
 - **About Us:** Refreshed with historical stats, values, and a leadership team grid.

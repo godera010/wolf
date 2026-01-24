@@ -1,5 +1,12 @@
+
 import { useState } from 'react';
-import { Search, Ticket, Calendar, MapPin, Clock, User } from 'lucide-react';
+import { Search, Ticket, ArrowLeft } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import PageHero from '../components/ui/PageHero';
+import Section from '../components/ui/Section';
+import { Card } from '../components/ui/Card';
+import { Button } from '../components/ui/button';
+import TicketCard from '../components/TicketCard';
 
 export default function CheckTicketPage() {
   const [ticketNumber, setTicketNumber] = useState('');
@@ -8,181 +15,132 @@ export default function CheckTicketPage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!ticketNumber) return;
+
     setLoading(true);
-    
+
     // Simulate API call
     setTimeout(() => {
-      if (ticketNumber) {
-        setTicketData({
-          ticketNumber: ticketNumber,
-          passengerName: 'Sarah Moyo',
-          from: 'Harare',
-          to: 'Bulawayo',
-          date: '2026-01-15',
-          time: '09:00 AM',
-          seatNumber: '12A',
-          price: '$25.00',
-          status: 'Confirmed',
-        });
-      }
+      setTicketData({
+        ticketNumber: ticketNumber,
+        passengerName: 'Sarah Moyo',
+        from: 'Harare',
+        to: 'Bulawayo',
+        date: '2026-01-15',
+        time: '09:00 AM',
+        seatNumber: '12A',
+        price: 25.00,
+        status: 'Confirmed',
+      });
       setLoading(false);
-    }, 1000);
+    }, 1500); // Slightly longer delay to feel like a "search"
+  };
+
+  const handleReset = () => {
+    setTicketData(null);
+    setTicketNumber('');
   };
 
   return (
-    <div className="flex-grow py-12 bg-gray-50 min-h-full">
-        <div className="container mx-auto px-4">
-          <h1 className="font-['Montserrat',sans-serif] font-bold text-4xl md:text-5xl text-center text-[#01257d] mb-4">
-            Check Your Ticket
-          </h1>
-          <p className="font-['Montserrat',sans-serif] text-center text-gray-600 mb-12">
-            Enter your ticket number to view your booking details
-          </p>
+    <div className="flex-grow flex flex-col min-h-full">
+      {/* Page Hero */}
+      <AnimatePresence>
+        {!ticketData && (
+          <motion.div
+            initial={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0, overflow: 'hidden', transition: { duration: 0.5 } }}
+            className="flex-shrink-0"
+          >
+            <PageHero
+              title="Check Your Ticket"
+              subtitle="Enter your ticket number to view your booking details"
+              className="pb-6 md:pb-8"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-          <div className="max-w-2xl mx-auto">
-            {/* Search Form */}
-            <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-              <form onSubmit={handleSearch}>
-                <div className="relative mb-6">
-                  <Ticket className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <input
-                    type="text"
-                    value={ticketNumber}
-                    onChange={(e) => setTicketNumber(e.target.value)}
-                    placeholder="Enter your ticket number (e.g., TKT123456)"
-                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg font-['Montserrat',sans-serif] text-sm focus:outline-none focus:ring-2 focus:ring-[#e96f30] focus:border-transparent"
-                    required
+      <Section className="pt-0 md:pt-4">
+        <div className="max-w-4xl mx-auto px-4 relative min-h-[400px]">
+          <AnimatePresence mode="wait">
+            {!ticketData ? (
+              /* Search Form */
+              <motion.div
+                key="search-form"
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)", transition: { duration: 0.3 } }}
+                className="max-w-xl mx-auto"
+              >
+                <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-grow">
+                    <Ticket className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                    <input
+                      type="text"
+                      value={ticketNumber}
+                      onChange={(e) => setTicketNumber(e.target.value.toUpperCase())}
+                      placeholder="Ticket Number (e.g., RW-8X92)"
+                      className="w-full pl-12 pr-4 h-[60px] border border-slate-200 rounded-xl font-['Montserrat',sans-serif] text-base focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all uppercase placeholder:normal-case shadow-sm"
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="h-[60px] px-8 bg-[#01257d] hover:bg-[#001a5c] text-white font-bold rounded-xl shadow-lg shadow-blue-900/10 transition-all active:scale-95 shrink-0"
+                  >
+                    {loading ? (
+                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <Search size={22} />
+                    )}
+                  </Button>
+                </form>
+              </motion.div>
+            ) : (
+              /* Ticket Result */
+              <motion.div
+                key="ticket-result"
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
+                className="w-full"
+              >
+                <div className="mb-8 flex items-center justify-between">
+                  <Button
+                    variant="ghost"
+                    onClick={handleReset}
+                    className="font-['Montserrat',sans-serif] font-semibold text-slate-500 hover:text-primary gap-2"
+                  >
+                    <ArrowLeft size={18} />
+                    Check Another Ticket
+                  </Button>
+                  <div className="px-3 py-1 bg-green-50 border border-green-100 rounded-full flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-xs font-bold text-green-700 uppercase tracking-wider">Ticket Valid</span>
+                  </div>
+                </div>
+
+                <div className="transform hover:scale-[1.01] transition-transform duration-300">
+                  <TicketCard
+                    ticket={ticketData}
+                    // Map fields if names slightly differ, but here they match
+                    bookingDetails={{
+                      from: ticketData.from,
+                      to: ticketData.to,
+                      date: ticketData.date
+                    }}
                   />
                 </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#042880] hover:bg-[#012275] disabled:bg-gray-400 text-white font-['Montserrat',sans-serif] font-medium text-[15px] px-8 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
-                >
-                  <Search size={20} />
-                  {loading ? 'Searching...' : 'Search Ticket'}
-                </button>
-              </form>
-            </div>
 
-            {/* Ticket Details */}
-            {ticketData && (
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-[#01257d] to-[#e96f30] p-6 text-white">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="font-['Montserrat',sans-serif] font-bold text-2xl mb-1">
-                        Ticket Details
-                      </h2>
-                      <p className="font-['Montserrat',sans-serif] text-sm opacity-90">
-                        Ticket #{ticketData.ticketNumber}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <div className={`inline-block px-4 py-2 rounded-full ${
-                        ticketData.status === 'Confirmed' 
-                          ? 'bg-green-500' 
-                          : 'bg-yellow-500'
-                      }`}>
-                        <span className="font-['Montserrat',sans-serif] font-semibold text-sm">
-                          {ticketData.status}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="mt-8 flex justify-center">
+                  <p className="text-slate-400 text-sm font-['Montserrat',sans-serif]">Ticket generated on {new Date().toLocaleDateString()}</p>
                 </div>
-
-                <div className="p-8 space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex items-start gap-3">
-                      <User className="text-[#01257d] mt-1 flex-shrink-0" size={20} />
-                      <div>
-                        <p className="font-['Montserrat',sans-serif] text-sm text-gray-600 mb-1">
-                          Passenger Name
-                        </p>
-                        <p className="font-['Montserrat',sans-serif] font-semibold text-gray-800">
-                          {ticketData.passengerName}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <MapPin className="text-[#01257d] mt-1 flex-shrink-0" size={20} />
-                      <div>
-                        <p className="font-['Montserrat',sans-serif] text-sm text-gray-600 mb-1">
-                          Route
-                        </p>
-                        <p className="font-['Montserrat',sans-serif] font-semibold text-gray-800">
-                          {ticketData.from} → {ticketData.to}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <Calendar className="text-[#01257d] mt-1 flex-shrink-0" size={20} />
-                      <div>
-                        <p className="font-['Montserrat',sans-serif] text-sm text-gray-600 mb-1">
-                          Travel Date
-                        </p>
-                        <p className="font-['Montserrat',sans-serif] font-semibold text-gray-800">
-                          {new Date(ticketData.date).toLocaleDateString('en-US', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <Clock className="text-[#01257d] mt-1 flex-shrink-0" size={20} />
-                      <div>
-                        <p className="font-['Montserrat',sans-serif] text-sm text-gray-600 mb-1">
-                          Departure Time
-                        </p>
-                        <p className="font-['Montserrat',sans-serif] font-semibold text-gray-800">
-                          {ticketData.time}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-6">
-                    <div className="flex justify-between items-center mb-4">
-                      <div>
-                        <p className="font-['Montserrat',sans-serif] text-sm text-gray-600 mb-1">
-                          Seat Number
-                        </p>
-                        <p className="font-['Montserrat',sans-serif] font-bold text-2xl text-[#01257d]">
-                          {ticketData.seatNumber}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-['Montserrat',sans-serif] text-sm text-gray-600 mb-1">
-                          Total Amount
-                        </p>
-                        <p className="font-['Montserrat',sans-serif] font-bold text-2xl text-[#e96f30]">
-                          {ticketData.price}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-blue-50 rounded-lg p-4">
-                    <p className="font-['Montserrat',sans-serif] text-sm text-gray-700">
-                      <strong>Important:</strong> Please arrive at the station at least 30 minutes before departure time. Bring a valid ID for verification.
-                    </p>
-                  </div>
-
-                  <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-['Montserrat',sans-serif] font-medium py-3 rounded-lg transition-colors">
-                    Download Ticket
-                  </button>
-                </div>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </AnimatePresence>
         </div>
+      </Section>
     </div>
   );
 }

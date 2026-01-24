@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2026-01-24
+
+### Refactored
+- **Code Standardization (Booking Flow):**
+  - Refactored `SeatSelectionPage`, `PassengerInfoPage`, `PaymentPage`, and `BookingSuccessPage` to use the unified `Section` and `Card` components.
+  - Replaced manual `<div>` containers with semantic and reusable layout components, improving maintainability.
+  - **Design System Compliance:** Removed all hardcoded hex color values. All pages now strictly use `text-primary`, `bg-secondary`, etc., drawing from the central theme tokens.
+  - **Code Cleanup:** Removed duplicated logic and unused imports across the booking journey.
+
 ## [0.2.2] - 2026-01-23
 
 ### Changed

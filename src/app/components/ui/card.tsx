@@ -1,92 +1,53 @@
 import * as React from "react";
-
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+const cardVariants = cva(
+  "rounded-2xl transition-all duration-300 overflow-hidden font-['Montserrat',sans-serif]",
+  {
+    variants: {
+      variant: {
+        default: "bg-white border border-slate-100 shadow-sm",
+        ghost: "bg-transparent shadow-none border-none",
+        outline: "bg-transparent border border-slate-200 shadow-none",
+        elevated: "bg-white border border-slate-100 shadow-lg",
+      },
+      hover: {
+        none: "",
+        lift: "hover:-translate-y-1 hover:shadow-xl",
+        glow: "hover:border-secondary/50 hover:shadow-[0_0_20px_rgba(233,111,48,0.15)]",
+        subtle: "hover:bg-slate-50",
+      },
+      padding: {
+        none: "p-0",
+        sm: "p-4",
+        md: "p-6",
+        lg: "p-8",
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      hover: "none",
+      padding: "md",
+    },
+  }
+);
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-header"
-      className={cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 pt-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+  VariantProps<typeof cardVariants> { }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <h4
-      data-slot="card-title"
-      className={cn("leading-none", className)}
-      {...props}
-    />
-  );
-}
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant, hover, padding, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(cardVariants({ variant, hover, padding, className }))}
+        {...props}
+      />
+    );
+  }
+);
+Card.displayName = "Card";
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <p
-      data-slot="card-description"
-      className={cn("text-muted-foreground", className)}
-      {...props}
-    />
-  );
-}
-
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn(
-        "col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("px-6 [&:last-child]:pb-6", className)}
-      {...props}
-    />
-  );
-}
-
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-footer"
-      className={cn("flex items-center px-6 pb-6 [.border-t]:pt-6", className)}
-      {...props}
-    />
-  );
-}
-
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
-  CardContent,
-};
+export { Card, cardVariants };

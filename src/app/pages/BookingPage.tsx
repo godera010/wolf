@@ -1,18 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookingSteps from '../components/BookingSteps';
 import {
-  ChevronDown,
   Calendar,
   MapPin,
   ArrowRightLeft,
-  Clock,
   Wifi,
   Coffee,
   Tv,
   Bus as BusIcon,
   ArrowRight,
-  X,
   Loader2
 } from 'lucide-react';
 import { toast } from "sonner";
@@ -94,7 +91,7 @@ const MOCK_BUSES: Bus[] = [
 
 export default function BookingPage() {
   const navigate = useNavigate();
-  const dateInputRef = useRef<HTMLInputElement>(null);
+  // const dateInputRef = useRef<HTMLInputElement>(null); // Removed unused ref
   const [showTitle, setShowTitle] = useState(true);
   const [showResults, setShowResults] = useState(false);
   const [isSearching, setIsSearching] = useState(false);

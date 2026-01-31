@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom';
-import imgHero1 from "@/assets/72c4d03818baa064f073c65d62f9828655982ce2.png";
-import imgHero2 from "@/assets/DH9iuo6qo8ZS4deIgYiQ8DaQWH2c0N05y06Wl8sm.jpg";
-import imgHero3 from "@/assets/IMG-20250223-WA0006.jpg";
+import imgHero1 from "@/assets/background/0.webp";
+import imgHero2 from "@/assets/background/1.jpg";
+import imgHero3 from "@/assets/background/2.jpeg";
+import imgHero4 from "@/assets/background/5.jpeg";
 import { Timer, Milestone, Armchair, CircleDollarSign, Star, ArrowRight, Wifi, Zap, Wind } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 
 export default function HomePage() {
-  const heroImages = [imgHero1, imgHero2, imgHero3];
+  const heroImages = [imgHero1, imgHero2, imgHero3, imgHero4];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 7000); // Change image every 7 seconds
+    }, 4000); // Change image every 4 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -82,7 +83,7 @@ export default function HomePage() {
     },
   ];
 
-  const fadeInUp = {
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
@@ -91,7 +92,7 @@ export default function HomePage() {
     }
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -103,9 +104,36 @@ export default function HomePage() {
 
   return (
     <div className="bg-white">
+      {/* Scrolling Text Banner */}
+      <div className="bg-transparent text-white py-3 overflow-hidden whitespace-nowrap border-b border-white/10 absolute top-0 left-0 right-0 z-20">
+        <div className="animate-marquee inline-block">
+          <span className="mx-4 text-sm md:text-base font-medium">
+            Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
+          </span>
+          <span className="mx-4 text-sm md:text-base font-medium">
+            • Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
+          </span>
+          <span className="mx-4 text-sm md:text-base font-medium">
+            • Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
+          </span>
+        </div>
+        <style>{`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-33.33%); }
+          }
+          .animate-marquee {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+      </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-[calc(100vh-64px)] overflow-hidden flex items-center justify-center py-8 md:py-12">
+      <section className="relative min-h-[85vh] md:min-h-[calc(100vh-104px)] overflow-hidden flex items-center justify-center py-8 md:py-12">
         <div className="absolute inset-0 z-0">
           {heroImages.map((image, index) => (
             <img
@@ -116,36 +144,33 @@ export default function HomePage() {
                 }`}
             />
           ))}
-          {/* Enhanced Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-10" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
-            <span className="inline-block py-2 px-4 rounded-full bg-[#e96f30] text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-6 backdrop-blur-sm border border-white/20 shadow-lg">
+        </div>          {/* Enhanced Overlay */}
+        <div className="relative z-10 container mx-auto px-4 flex flex-col items-start gap-6 md:gap-8">
+          {/* Centered Badge outside the card */}
+          <div className="w-full flex justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
+            <span className="inline-block py-2 px-4 rounded-full bg-[#e96f30] text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] shadow-lg">
               Premium Travel Experience
             </span>
           </div>
 
-          <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-white mb-6 max-w-5xl leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-            Travel Comfortably <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white">
-              Across Zimbabwe
-            </span>
-          </h1>
+          {/* Glassmorphism Card Wrapper */}
+          <div className="bg-black/10 backdrop-blur-[2px] rounded-3xl p-6 md:p-12 max-w-2xl w-full text-left animate-in fade-in slide-in-from-bottom-8 duration-1000 mx-auto md:mx-0">
+            <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-white mb-6 md:mb-8 leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+              Travel Comfortably <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white">
+                Across Zimbabwe
+              </span>
+            </h1>
 
-          <p className="text-base md:text-lg text-slate-200 mb-10 max-w-2xl drop-shadow-md animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 px-4">
-            Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
-          </p>
-
-          <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
-            <Link
-              to="/booking"
-              className="group relative inline-flex items-center justify-center bg-[#e96f30] hover:bg-[#d55f26] text-white font-bold text-lg md:text-xl px-10 md:px-12 py-4 md:py-5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(233,111,48,0.5)] hover:shadow-[0_0_30px_rgba(233,111,48,0.7)] hover:-translate-y-1 active:scale-95"
-            >
-              <span>Book Your Seat Now</span>
-              <ArrowRight className="ml-3 w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+              <Link
+                to="/booking"
+                className="group w-full md:w-auto relative inline-flex items-center justify-center bg-[#e96f30] hover:bg-[#d55f26] text-white font-bold text-lg md:text-xl px-10 md:px-12 py-4 md:py-5 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(233,111,48,0.5)] hover:shadow-[0_0_30px_rgba(233,111,48,0.7)] hover:-translate-y-1 active:scale-95"
+              >
+                <span>Book Your Seat Now</span>
+                <ArrowRight className="ml-3 w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

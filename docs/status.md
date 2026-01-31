@@ -2,8 +2,8 @@
 
 This document summarizes the progress, features, and UI/UX enhancements implemented for the RoadWolf Coach Booking application.
 
-## 🚀 Current Status: **Code Standardization (Booking Flow)** - `v0.2.3`
-The application has a robust, production-grade booking journey with a newly polished, luxury ticket design and a fully refactored, maintainable codebase.
+## 🚀 Current Status: **Refactoring & Optimization** - `v0.2.5`
+The application has undergone a significant code cleanup and stabilization phase. All known linting errors, unused assets, and import casing inconsistencies have been resolved. The layout for the Routes page has been refined for better information density.
 See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ---
@@ -23,6 +23,10 @@ See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 - [x] **Glassmorphism:** Applied translucent card styles with `backdrop-blur` and `shadow-2xl` for a premium feel.
 - [x] **Animations:** Added `animate-in` effects (fade-in, slide-in) for smoother page transitions.
 - [x] **Icon Consistency:** Standardized all icons using a "gradient-box" container style across Home, About, and Feature sections.
+- [x] **Global Responsiveness:** Verified `HomePage`, `AboutPage`, and `RoutesPage` across mobile, tablet, and desktop breakpoints.
+- [x] **Asset Organization:** Structured specific destination assets into `src/assets/routes`.
+- [x] **Code Health:** Removed unused variables and imports across core pages (`RoutesPage`, `BookingPage`, `PassengerInfoPage`).
+- [x] **Stability:** Fixed import casing issues (`card.tsx`) and resolved Framer Motion type discrepancies.
 
 ---
 
@@ -60,16 +64,22 @@ See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ### **3. Content Pages**
 - **About Us:** Refreshed with historical stats, values, and a leadership team grid.
-- **Gallery:** 
-    - Masonry-style grid of fleet and travel photos.
     - Interactive Lightbox for viewing images in full screen.
+- **routesPage:**
+    - **Interactive Map:** SVG-based map with animated city markers and connections.
+    - **Responsive Layout:** 
+        - **Desktop:** Interactive map + Sidebar detailed view.
+        - **Mobile:** Mobile-first design with Map + "Bottom Sheet" for city details.
 
 ---
 
 ## 📦 Build Artifacts
 - **Entry Point:** `src/main.tsx`
 - **Primary Styles:** `src/styles/index.css` (Tailwind v4)
-- **Asset Directory:** `src/assets/` (Cleaned of broken references)
+- **Asset Directory:** `src/assets/`
+  Static assets like images and icons.
+  - **`routes/`**: Images for specific destinations (Harare, Bulawayo, etc.).
+  - **`background/`**: General background images.
 
 ## 🔜 Next Steps (Recommendations)
 - [ ] Integration with a real backend/API for live scheduling.

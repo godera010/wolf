@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingSteps from '../components/BookingSteps';
 import Section from '../components/ui/Section';
-import { Card } from '../components/ui/Card';
-import { User, Mail, Phone, CreditCard, MapPin, Calendar, ChevronRight, Info, X } from 'lucide-react';
+import { Card } from '../components/ui/card';
+import { ChevronRight, Mail, Phone, CreditCard, MapPin, Calendar, X } from 'lucide-react';
 
 interface Passenger {
   seatNumber: number;
@@ -19,7 +19,7 @@ interface ContactDetails {
   phone: string;
 }
 
-const DEFAULT_PRICE = 20;
+// Removed unused DEFAULT_PRICE
 
 export default function PassengerInfoPage() {
   const navigate = useNavigate();

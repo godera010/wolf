@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BookingSteps from '../components/BookingSteps';
 import Section from '../components/ui/Section';
-import { Card } from '../components/ui/Card';
+import { Card } from '../components/ui/card';
 import { CreditCard, Smartphone, Lock, MapPin, Calendar, User, X, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
 

@@ -30,7 +30,7 @@ export default function BookingSteps({ currentStep }: BookingStepsProps) {
 
         {/* Steps */}
         <div className="grid grid-cols-5 gap-2 md:gap-0">
-          {steps.map((step, index) => {
+          {steps.map((step) => {
             const isActive = step.number === Math.floor(currentStep);
             const isCompleted = step.number < Math.floor(currentStep);
 

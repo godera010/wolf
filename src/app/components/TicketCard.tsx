@@ -1,5 +1,5 @@
 import { ChevronRight } from 'lucide-react';
-import imgLogo from '../../assets/a306ff2bd95bbfb239ff7e9d8b26c60f646d26e4.png';
+import imgLogo from '@/assets/logo3.png';
 import clsx from 'clsx';
 
 // Shared Location Data Source (Ideally this should be in a constants file or context)

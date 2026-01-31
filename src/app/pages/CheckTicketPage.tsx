@@ -4,7 +4,6 @@ import { Search, Ticket, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageHero from '../components/ui/PageHero';
 import Section from '../components/ui/Section';
-import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/button';
 import TicketCard from '../components/TicketCard';
 

@@ -2,8 +2,8 @@ import { useState, useMemo, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BookingSteps from '../components/BookingSteps';
 import Section from '../components/ui/Section';
-import { Card } from '../components/ui/Card';
-import { ChevronRight, Info, MapPin, Calendar, User, X } from 'lucide-react';
+import { Card } from '../components/ui/card';
+import { ChevronRight, Info, MapPin, Calendar, X } from 'lucide-react';
 import clsx from 'clsx';
 
 // Constants

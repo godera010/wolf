@@ -50,7 +50,9 @@ Main application logic and components.
     - `BookingSuccessPage.tsx`: Step 5 - Confirmation & Ticket.
 
 ### `src/assets/`
-Static assets like images and icons. Contains extracted images from designs (e.g., coach images, placeholders).
+Static assets like images and icons.
+- **`routes/`**: Images for specific destinations (Harare, Bulawayo, etc.).
+- **`background/`**: General background images.
 
 ### `src/imports/`
 Components or logic imported directly from external tools or previous iterations. These are legacy references.

@@ -21,9 +21,7 @@ export default function App() {
 
   useEffect(() => {
     // Simulate initial resource loading + minimum display time
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1500);
+    const timer = setTimeout(() => setLoading(false), 800); // Reduced from 1500ms to 800ms
     return () => clearTimeout(timer);
   }, []);
 
@@ -35,76 +33,16 @@ export default function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <HomePage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/booking" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <BookingPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/booking/seats" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <SeatSelectionPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/booking/passengers" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <PassengerInfoPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/booking/payment" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <PaymentPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/booking/success" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <BookingSuccessPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/routes" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <RoutesPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/gallery" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <GalleryPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/about" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <AboutPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
-          <Route path="/check-ticket" element={
-            <ErrorBoundary>
-              <Suspense fallback={<LoadingScreen />}>
-                <CheckTicketPage />
-              </Suspense>
-            </ErrorBoundary>
-          } />
+          <Route path="/" element={<ErrorBoundary><Suspense fallback={null}><HomePage /></Suspense></ErrorBoundary>} />
+          <Route path="/booking" element={<ErrorBoundary><Suspense fallback={null}><BookingPage /></Suspense></ErrorBoundary>} />
+          <Route path="/booking/seats" element={<ErrorBoundary><Suspense fallback={null}><SeatSelectionPage /></Suspense></ErrorBoundary>} />
+          <Route path="/booking/passengers" element={<ErrorBoundary><Suspense fallback={null}><PassengerInfoPage /></Suspense></ErrorBoundary>} />
+          <Route path="/booking/payment" element={<ErrorBoundary><Suspense fallback={null}><PaymentPage /></Suspense></ErrorBoundary>} />
+          <Route path="/booking/success" element={<ErrorBoundary><Suspense fallback={null}><BookingSuccessPage /></Suspense></ErrorBoundary>} />
+          <Route path="/routes" element={<ErrorBoundary><Suspense fallback={null}><RoutesPage /></Suspense></ErrorBoundary>} />
+          <Route path="/gallery" element={<ErrorBoundary><Suspense fallback={null}><GalleryPage /></Suspense></ErrorBoundary>} />
+          <Route path="/about" element={<ErrorBoundary><Suspense fallback={null}><AboutPage /></Suspense></ErrorBoundary>} />
+          <Route path="/check-ticket" element={<ErrorBoundary><Suspense fallback={null}><CheckTicketPage /></Suspense></ErrorBoundary>} />
         </Route>
       </Routes>
     </BrowserRouter>

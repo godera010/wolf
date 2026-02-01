@@ -117,7 +117,7 @@ export default function HomePage() {
     <div className="bg-white">
       {/* Scrolling Text Banner */}
       <div className="bg-transparent text-white py-3 overflow-hidden whitespace-nowrap border-b border-white/10 absolute top-0 left-0 right-0 z-20">
-        <div className="animate-marquee inline-block will-change-transform">
+        <div className="animate-marquee inline-block">
           <span className="mx-4 text-sm md:text-base font-medium">
             Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
           </span>
@@ -151,7 +151,7 @@ export default function HomePage() {
               key={index}
               src={image}
               alt={`RoadWolf Coach ${index + 1}`}
-              className={`absolute inset-0 w-full h-full md:object-cover object-cover transform md:scale-105 transition-opacity duration-[2000ms] ease-in-out will-change-[opacity,transform] ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+              className={`absolute inset-0 w-full h-full md:object-cover object-cover transform md:scale-105 transition-opacity duration-[2000ms] ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                 }`}
             />
           ))}
@@ -164,9 +164,9 @@ export default function HomePage() {
             </span>
           </div>
 
-                  {/* Glassmorphism Card Wrapper */}
-                  <div className="bg-black/40 rounded-3xl p-6 md:p-12 max-w-2xl w-full text-center md:text-left animate-in fade-in slide-in-from-bottom-8 duration-1000 mx-auto md:mx-0">
-                    <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-white mb-6 md:mb-8 leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">              Ride with the Pack – <br />
+          {/* Glassmorphism Card Wrapper */}
+          <div className="bg-black/40 rounded-3xl p-6 md:p-12 max-w-2xl w-full text-center md:text-left animate-in fade-in slide-in-from-bottom-8 duration-1000 mx-auto md:mx-0">
+            <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-white mb-6 md:mb-8 leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">              Ride with the Pack – <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white">
                 Travel Smarter, Faster, Wilder
               </span>

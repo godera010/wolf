@@ -153,7 +153,7 @@ export default function RoutesPage() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="w-full h-full flex flex-col will-change-contents"
+                    className="w-full h-full flex flex-col"
                   >
                     <div className="w-full aspect-video rounded-2xl overflow-hidden mb-6 shadow-md relative">
                       <img src={activeDestination.image} alt={activeDestination.name} className="w-full h-full object-cover" />

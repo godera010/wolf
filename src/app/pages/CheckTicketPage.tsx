@@ -69,7 +69,7 @@ export default function CheckTicketPage() {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)", transition: { duration: 0.3 } }}
-                className="max-w-xl mx-auto will-change-transform"
+                className="max-w-xl mx-auto"
               >
                 <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-grow">
@@ -103,7 +103,7 @@ export default function CheckTicketPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full will-change-transform"
+                className="w-full"
               >
                 <div className="mb-8 flex items-center justify-between">
                   <Button

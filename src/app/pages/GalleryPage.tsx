@@ -37,12 +37,7 @@ export default function GalleryPage() {
         </div>
 
         {/* Hero Section */}
-        <motion.section
-          className="relative h-[50vh] flex items-center justify-center overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
+        <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <img
               src={img5}
@@ -51,32 +46,17 @@ export default function GalleryPage() {
             />
           </div>
           <div className="relative z-10 container mx-auto px-4 text-center">
-            <motion.span
-              className="text-[#e96f30] font-bold uppercase tracking-widest text-sm mb-4 block"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
+            <span className="text-[#e96f30] font-bold uppercase tracking-widest text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-500">
               Captured Moments
-            </motion.span>
-            <motion.h1
-              className="font-bold text-4xl md:text-6xl text-white mb-6 drop-shadow-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
+            </span>
+            <h1 className="font-bold text-4xl md:text-6xl text-white mb-6 drop-shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
               Life on the Road
-            </motion.h1>
-            <motion.p
-              className="text-gray-200 max-w-2xl mx-auto text-xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
+            </h1>
+            <p className="text-gray-200 max-w-2xl mx-auto text-xl animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
               Explore our fleet, our people, and the beautiful landscapes of Zimbabwe through our lens.
-            </motion.p>
+            </p>
           </div>
-        </motion.section>
+        </section>
 
         {/* Gallery Grid */}
         <section className="py-12 pb-24 relative z-10">
@@ -142,7 +122,7 @@ export default function GalleryPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 will-change-[opacity]"
+            className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
             <button

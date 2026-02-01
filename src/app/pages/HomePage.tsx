@@ -1,23 +1,34 @@
 import { Link } from 'react-router-dom';
+// Eagerly load first hero image for LCP
 import imgHero1 from "@/assets/background/0.webp";
-import imgHero2 from "@/assets/background/1.jpg";
-import imgHero3 from "@/assets/background/2.jpeg";
-import imgHero4 from "@/assets/background/5.jpeg";
+// Lazy load remaining hero images
+const imgHero2 = () => import("@/assets/background/1.jpg").then(m => m.default);
+const imgHero3 = () => import("@/assets/background/2.jpeg").then(m => m.default);
+const imgHero4 = () => import("@/assets/background/5.jpeg").then(m => m.default);
 import { Timer, Milestone, Armchair, CircleDollarSign, Star, ArrowRight, Wifi, Zap, Wind } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, Variants } from "motion/react";
 
 export default function HomePage() {
-  const heroImages = [imgHero1, imgHero2, imgHero3, imgHero4];
+  const [heroImages, setHeroImages] = useState<string[]>([imgHero1]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Lazy load remaining hero images after mount
   useEffect(() => {
+    Promise.all([imgHero2(), imgHero3(), imgHero4()]).then(([img2, img3, img4]) => {
+      setHeroImages([imgHero1, img2, img3, img4]);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (heroImages.length < 2) return; // Don't start carousel until images are loaded
+
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 4000); // Change image every 4 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [heroImages]);
 
   const features = [
     {

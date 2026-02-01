@@ -5,44 +5,54 @@ import { MapPin, ArrowRight, Bus, Info } from 'lucide-react';
 // Placeholder Assets (Keeping existing imports)
 // Real Route Assets
 import imgHarare from '@/assets/routes/harare.jpg';
-import imgBulawayo from '@/assets/background/2.jpeg'; // Keep as fallback if not in folder
-import imgVicFalls from '@/assets/routes/Vic Falls.jpg';
+import imgBulawayo from '@/assets/background/2.jpeg'; // Fallback
 import imgGweru from '@/assets/routes/gweru.jpg';
 import imgKwekwe from '@/assets/routes/Kwekwe.jpg';
 import imgKadoma from '@/assets/routes/kadoma.jpg';
 import imgChegutu from '@/assets/routes/chegutu.png';
-import imgHwange from '@/assets/routes/hwange.jpg';
+import imgHeroBg from '@/assets/background/5.jpeg';
+import logo from '@/assets/logo3.png';
 
 // Destination Data
 const destinations = [
   {
     id: 'harare',
     name: 'Harare',
+    stopName: 'Holiday Inn Harare',
+    category: 'Hotel',
+    rating: 4.2,
+    status: 'Open',
+    reviewSnippet: 'A dependable choice for travelers seeking comfort and modern amenities in the heart of the capital.',
+    mapLink: 'https://www.ihg.com/holidayinn/hotels/us/en/harare/harsf/hoteldetail',
     description: 'The capital city. A bustling metropolis with a rich history, modern shopping malls, and vibrant nightlife.',
     image: imgHarare,
     coordinates: { x: 66.0, y: 36.3 },
-    routes: ['Bulawayo', 'Mutare', 'Gweru', 'Kwekwe', 'Kadoma', 'Chegutu']
+    routes: ['Bulawayo', 'Gweru', 'Kwekwe', 'Kadoma', 'Chegutu']
   },
   {
     id: 'bulawayo',
     name: 'Bulawayo',
+    stopName: 'Bulawayo Rainbow Hotel',
+    category: 'Hotel',
+    rating: 4.2,
+    status: 'Open',
+    reviewSnippet: 'Stood out for its good food and great views over Bulawayo town.',
+    mapLink: 'https://rtgafrica.com/bulawayo-rainbow-hotel/',
     description: 'The City of Kings. Known for its wide streets, colonial architecture, and proximity to Matobo National Park.',
     image: imgBulawayo,
     coordinates: { x: 40.0, y: 66.3 },
-    routes: ['Harare', 'Victoria Falls', 'Hwange', 'Gweru']
-  },
-  {
-    id: 'vicballs',
-    name: 'Victoria Falls',
-    description: 'One of the Seven Natural Wonders of the World. The adventure capital offering bungee jumping, safaris, and breathtaking views.',
-    image: imgVicFalls,
-    coordinates: { x: 11.0, y: 37.6 },
-    routes: ['Bulawayo', 'Hwange']
+    routes: ['Harare', 'Gweru', 'Kwekwe']
   },
   {
     id: 'gweru',
     name: 'Gweru',
-    description: 'The Midlands capital. A central hub known for the Antelope Park and the corrupt-free Military Museum.',
+    stopName: 'Steers',
+    category: 'Restaurant',
+    rating: 4.0,
+    status: 'Opens 07:00',
+    reviewSnippet: 'Standard refreshment and pick-up point known for quick service and flame-grilled food.',
+    mapLink: 'https://zimbabwelocations.steers.africa/restaurants-ZW-SteersGweru',
+    description: 'The Midlands capital. A central hub known for the Antelope Park and the Military Museum.',
     image: imgGweru,
     coordinates: { x: 53.0, y: 57.3 },
     routes: ['Harare', 'Bulawayo', 'Kwekwe']
@@ -50,6 +60,12 @@ const destinations = [
   {
     id: 'kwekwe',
     name: 'Kwekwe',
+    stopName: 'TotalEnergies Service Station',
+    category: 'Gas Station',
+    rating: 3.7,
+    status: 'Open 24h',
+    reviewSnippet: 'Primary fuel and rest stop, providing a functional and safe environment for quick stops.',
+    mapLink: 'https://zw.totalenergies.com/',
     description: 'An industrial and mining center, home to the National Mining Museum and a key stop on the main highway.',
     image: imgKwekwe,
     coordinates: { x: 53.0, y: 50.4 },
@@ -58,6 +74,12 @@ const destinations = [
   {
     id: 'kadoma',
     name: 'Kadoma',
+    stopName: 'Odyssey Lodge',
+    category: 'Lodging',
+    rating: 3.9,
+    status: 'Open 24h',
+    reviewSnippet: 'Key landmark and popular local entertainment venue with 24-hour service.',
+    mapLink: 'http://www.odysseylodge.co.zw/',
     description: 'The City of Gold. A historic mining town surrounded by rich agricultural lands and cotton fields.',
     image: imgKadoma,
     coordinates: { x: 54.0, y: 42.8 },
@@ -66,18 +88,16 @@ const destinations = [
   {
     id: 'chegutu',
     name: 'Chegutu',
+    stopName: 'Chegutu Bus Terminus',
+    category: 'Bus Station',
+    rating: 3.5,
+    status: 'Open',
+    reviewSnippet: 'Main transit point for travelers heading to Harare or Kadoma.',
+    mapLink: '#',
     description: 'A vital farming town famously known for its textile industry and citrus plantations.',
     image: imgChegutu,
     coordinates: { x: 56.4, y: 40.2 },
     routes: ['Harare', 'Kadoma']
-  },
-  {
-    id: 'hwange',
-    name: 'Hwange',
-    description: 'Ensure you spot the Big Five! Zimbabwe’s largest game reserve, famous for its massive elephant herds.',
-    image: imgHwange,
-    coordinates: { x: 17.9, y: 43.3 },
-    routes: ['Victoria Falls', 'Bulawayo']
   }
 ];
 
@@ -100,38 +120,86 @@ export default function RoutesPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] font-['Montserrat',sans-serif]" onClick={clearSelection}>
 
+      <section className="relative pt-32 pb-24 overflow-hidden -mt-20">
+        {/* Background Layer */}
+        <div className="absolute inset-0 z-0">
+          <img src={imgHeroBg} alt="RoadWolf Network" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#01257d]/95 via-[#01257d]/85 to-[#e96f30]/20 mix-blend-multiply"></div>
+          <div className="absolute inset-0 bg-black/30"></div>
+        </div>
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-xl tracking-tight">Our Routes & Network</h1>
+          <p className="text-blue-50 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-medium drop-shadow-md">
+            Discover our extensive bus routes connecting Zimbabwe's major cities.
+            <br className="hidden md:block" />
+            <span className="text-[#e96f30] font-bold">Scroll down</span> to interact with our live map and view stop details.
+          </p>
+        </div>
+      </section>
+
       <section className="pb-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
             {/* Left Column: Side Details Panel (Desktop Only) */}
-            <div className={`hidden lg:block lg:col-span-4 sticky top-24 transition-opacity duration-300 ${activeDestination ? 'opacity-100' : 'opacity-50 grayscale'}`}>
-              <div className="bg-white rounded-[2rem] p-6 shadow-xl border border-gray-100 min-h-[400px] flex flex-col items-center justify-center text-center">
+            <div className={`hidden lg:block lg:col-span-4 sticky top-24 will-change-contents ${activeDestination ? 'opacity-100' : 'opacity-50 grayscale'}`} style={{ transition: 'opacity 0.3s ease' }}>
+              <div className="bg-white rounded-[2rem] p-6 shadow-xl border border-gray-100 h-[500px] flex flex-col items-center justify-center text-center overflow-hidden">
 
                 {activeDestination ? (
                   <motion.div
                     key={activeDestination.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="w-full h-full flex flex-col"
                   >
-                    <div className="w-full aspect-video rounded-2xl overflow-hidden mb-6 shadow-md">
+                    <div className="w-full aspect-video rounded-2xl overflow-hidden mb-6 shadow-md relative">
                       <img src={activeDestination.image} alt={activeDestination.name} className="w-full h-full object-cover" />
+                      <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-[#e96f30] shadow-sm flex items-center gap-1">
+                        <MapPin size={12} />
+                        {activeDestination.category}
+                      </div>
                     </div>
 
-                    <h2 className="text-3xl font-bold text-[#01257d] mb-3">{activeDestination.name}</h2>
-                    <p className="text-gray-600 mb-6 leading-relaxed">{activeDestination.description}</p>
+                    <div className="w-full text-left mb-2">
+                      <h2 className="text-3xl font-bold text-[#01257d] leading-none">{activeDestination.name}</h2>
+                      <span className="text-lg font-medium text-[#e96f30] block mt-1">{activeDestination.stopName}</span>
+                    </div>
 
-                    <div className="w-full text-left">
-                      <span className="text-xs font-bold uppercase text-gray-400 block mb-3 pl-1">Connected Routes:</span>
-                      <div className="flex flex-wrap gap-2">
-                        {activeDestination.routes.map((route: string) => (
-                          <span key={route} className="bg-blue-50 text-[#01257d] px-3 py-1.5 rounded-full text-sm font-bold">
-                            {route}
-                          </span>
-                        ))}
+                    <div className="flex items-center gap-4 w-full mb-4 text-sm">
+                      <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg border border-yellow-100 text-yellow-700 font-bold">
+                        <span>★</span> {activeDestination.rating}
+                      </div>
+                      <div className={`px-2 py-1 rounded-lg border font-bold ${activeDestination.status.includes('Open') ? 'bg-green-50 border-green-100 text-green-700' : 'bg-gray-50 border-gray-100 text-gray-600'}`}>
+                        {activeDestination.status}
+                      </div>
+                    </div>
+
+                    <p className="text-gray-600 mb-4 leading-relaxed text-sm text-left">{activeDestination.description}</p>
+
+                    <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-50 text-left mb-4">
+                      <p className="text-xs text-gray-500 italic mb-2">"{activeDestination.reviewSnippet}"</p>
+                    </div>
+
+                    <div className="w-full text-left mt-auto">
+                      <div className="flex items-center justify-between">
+                        <a
+                          href={activeDestination.mapLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 bg-[#01257d] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#021b5b] transition-colors"
+                        >
+                          View Details <ArrowRight size={16} />
+                        </a>
+                        <div className="flex -space-x-2">
+                          {activeDestination.routes.map((route: string) => (
+                            <div key={route} className="w-8 h-8 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-[#01257d]" title={`To ${route}`}>
+                              {route.substring(0, 2).toUpperCase()}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -140,9 +208,9 @@ export default function RoutesPage() {
                     <div className="p-4 bg-blue-50 rounded-full mb-6">
                       <Bus size={48} className="text-[#01257d]" strokeWidth={1.5} />
                     </div>
-                    <h3 className="text-xl font-bold text-[#01257d] mb-3">Explore the RoadWolf Network</h3>
+                    <h3 className="text-xl font-bold text-[#01257d] mb-3">Tap a City to View Bus Stop Details</h3>
                     <p className="text-gray-500 mb-6 leading-relaxed text-sm">
-                      Our interactive map is designed to help you plan your travel with ease. We connect major cities and tourist hubs across Zimbabwe, ensuring safe and comfortable journeys.
+                      Explore our premium stop locations including hotels, restaurants, and service stations. Tap any city marker on the map to see exactly where we stop.
                     </p>
                     <div className="space-y-3 w-full max-w-xs text-left">
                       <div className="flex items-center gap-3 text-sm text-gray-600 bg-gray-50 p-3 rounded-xl border border-gray-100">
@@ -165,22 +233,26 @@ export default function RoutesPage() {
             </div>
 
             {/* Right Column: Interactive Map */}
-            <div className="col-span-1 lg:col-span-8 sticky top-24">
+            <div className="col-span-1 lg:col-span-8 sticky top-24 will-change-contents">
               <div
-                className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-6 shadow-2xl border border-gray-100 relative md:min-h-[500px] aspect-square md:aspect-[1.5/1] flex flex-col items-center justify-center overflow-hidden"
+                className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-6 shadow-2xl border border-gray-100 relative h-[500px] flex flex-col items-center justify-center overflow-hidden"
                 onClick={(e) => e.stopPropagation()} // Prevent clearing when clicking inside map container
               >
-                {/* Embedded Header */}
-                <div className="absolute top-6 left-6 z-10 text-left pointer-events-none max-w-sm">
-                  <div className="text-[#e96f30] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-1">
-                    Navigation
+                {/* Map Controls / Legend */}
+                <div className="absolute top-6 right-6 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-2xl border border-gray-100 shadow-sm text-xs space-y-2 pointer-events-none">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#e96f30]"></div>
+                    <span className="text-gray-600 font-bold">Route Stop</span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#01257d] drop-shadow-sm mb-2">
-                    Destinations Map
-                  </h2>
-                  <p className="text-sm text-gray-500 font-medium leading-relaxed hidden md:block">
-                    Explore our extensive travel network. Hover over any city to discover routes, attractions, and connections across Zimbabwe.
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#01257d]"></div>
+                    <span className="text-gray-600 font-bold">Major City</span>
+                  </div>
+                </div>
+
+                {/* Background Watermark/Logo */}
+                <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none overflow-hidden">
+                  <img src={logo} alt="" className="w-[80%] max-w-[400px] object-contain grayscale" />
                 </div>
 
                 {/* Stylized Zimbabwe Map SVG */}
@@ -202,8 +274,9 @@ export default function RoutesPage() {
                     />
 
                     {/* Connection Lines (Network) - Redrawn for new cities */}
+                    {/* Connection Lines (Network) - Simplified for removed routes */}
                     <motion.path
-                      d="M 527 236 L 452 261 M 452 261 L 434 278 M 434 278 L 425 328 M 425 328 L 425 372 M 425 372 L 320 431 M 320 431 L 143 281 M 143 281 L 88 244"
+                      d="M 527 236 L 452 261 M 452 261 L 434 278 M 434 278 L 425 328 M 425 328 L 425 372 M 425 372 L 320 431"
                       stroke="#e96f30"
                       strokeWidth="3"
                       strokeOpacity="0.3"
@@ -229,9 +302,11 @@ export default function RoutesPage() {
                             e.stopPropagation();
                             handleInteraction(city);
                           }}
-                          className="cursor-pointer hover:opacity-100"
+                          className="cursor-pointer"
                           style={{
-                            transition: 'all 0.3s ease'
+                            transition: 'transform 0.3s ease',
+                            transform: isActive ? 'scale(1.3)' : 'scale(1)',
+                            transformOrigin: `${x}px ${y}px`,
                           }}
                         >
                           {/* Pulse Effect for Active */}
@@ -244,13 +319,13 @@ export default function RoutesPage() {
 
                           {/* Outer Ring */}
                           <circle
-                            cx={x} cy={y} r={isActive ? 12 : 8}
+                            cx={x} cy={y} r={8}
                             fill="white" stroke={isActive ? "#e96f30" : "#d1d5db"} strokeWidth="3"
                             className="transition-all duration-300"
                           />
                           {/* Inner Dot */}
                           <circle
-                            cx={x} cy={y} r={isActive ? 6 : 4}
+                            cx={x} cy={y} r={4}
                             fill={isActive ? "#e96f30" : "#01257d"}
                             className="transition-all duration-300"
                           />
@@ -259,7 +334,8 @@ export default function RoutesPage() {
                           <text
                             x={x} y={y - 25}
                             textAnchor="middle"
-                            className={`text-[12px] font-bold font-sans transition-all duration-300 ${isActive ? 'fill-[#e96f30] text-[16px]' : 'fill-gray-400'}`}
+                            className={`font-bold font-sans transition-all duration-300 ${isActive ? 'fill-[#e96f30]' : 'fill-gray-400'}`}
+                            style={{ fontSize: isActive ? '16px' : '12px' }}
                           >
                             {city.name}
                           </text>
@@ -288,14 +364,25 @@ export default function RoutesPage() {
                           <img src={activeDestination.image} alt={activeDestination.name} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-grow">
-                          <h3 className="text-xl font-bold text-[#01257d] mb-1">{activeDestination.name}</h3>
+                          <h3 className="text-xl font-bold text-[#01257d] mb-1 leading-none">{activeDestination.name}</h3>
+                          <span className="text-sm font-medium text-[#e96f30] block mb-2">{activeDestination.stopName}</span>
+
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="text-xs font-bold text-yellow-600 bg-yellow-50 px-1.5 py-0.5 rounded border border-yellow-100">★ {activeDestination.rating}</span>
+                            <span className={`text-xs font-bold px-1.5 py-0.5 rounded border ${activeDestination.status.includes('Open') ? 'bg-green-50 text-green-700 border-green-100' : 'bg-gray-50 text-gray-600 border-gray-100'}`}>{activeDestination.status}</span>
+                          </div>
+
                           <p className="text-xs text-gray-500 mb-3 line-clamp-2">{activeDestination.description}</p>
-                          <div className="flex flex-wrap gap-1">
-                            {activeDestination.routes.slice(0, 3).map((route: string) => (
-                              <span key={route} className="bg-blue-50 text-[#01257d] px-2 py-0.5 rounded-full text-[10px] font-bold">
-                                {route}
-                              </span>
-                            ))}
+
+                          <div className="flex justify-between items-center mt-2">
+                            <a
+                              href={activeDestination.mapLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs font-bold text-[#01257d] underline decoration-[#e96f30] decoration-2 underline-offset-2"
+                            >
+                              View Stop Details
+                            </a>
                           </div>
                         </div>
                       </div>

@@ -92,7 +92,7 @@ const MOCK_BUSES: Bus[] = [
 export default function BookingPage() {
   const navigate = useNavigate();
   // const dateInputRef = useRef<HTMLInputElement>(null); // Removed unused ref
-  const [showTitle, setShowTitle] = useState(true);
+  // const [showTitle, setShowTitle] = useState(true); // Removed auto-hide state
   const [showResults, setShowResults] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [formData, setFormData] = useState({
@@ -106,12 +106,12 @@ export default function BookingPage() {
     date: false,
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTitle(false);
-    }, 3500); // Wait for animation then hide
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowTitle(false);
+  //   }, 3500);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   // Real Route Data
   // Real Route Data with Loading Points
@@ -193,8 +193,9 @@ export default function BookingPage() {
       <div className={`flex-grow relative z-10 py-3 md:py-12 ${showResults ? 'pb-32 lg:pb-12' : ''}`}>
         <div className="container mx-auto px-4">
           <AnimatePresence>
-            {showTitle && !showResults && (
+            {!showResults && (
               <motion.div
+                layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, height: 0, marginBottom: 0, y: -20 }}
@@ -373,9 +374,10 @@ export default function BookingPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.5 }}
-                  className="space-y-6"
+                  className="space-y-6 will-change-transform"
                 >
                   {/* Header */}
+
                   <div className="flex items-center justify-between bg-white/60 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-sm transition-all duration-300 md:mb-8">
                     <div className="flex-grow">
                       <div className="flex items-center gap-2 mb-1">

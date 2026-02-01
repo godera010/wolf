@@ -4,12 +4,12 @@ import { MapPin, ArrowRight, Bus, Info } from 'lucide-react';
 
 // Placeholder Assets (Keeping existing imports)
 // Real Route Assets
-import imgHarare from '@/assets/routes/harare.jpg';
-import imgBulawayo from '@/assets/background/2.jpeg'; // Fallback
+import imgHarare from '@/assets/routes/harare.webp';
+import imgBulawayo from '@/assets/background/3.jpg'; // Fallback
 import imgGweru from '@/assets/routes/gweru.jpg';
 import imgKwekwe from '@/assets/routes/Kwekwe.jpg';
 import imgKadoma from '@/assets/routes/kadoma.jpg';
-import imgChegutu from '@/assets/routes/chegutu.png';
+import imgChegutu from '@/assets/routes/chegutu.webp';
 import imgHeroBg from '@/assets/background/5.jpeg';
 import logo from '@/assets/logo3.png';
 
@@ -143,7 +143,7 @@ export default function RoutesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
             {/* Left Column: Side Details Panel (Desktop Only) */}
-            <div className={`hidden lg:block lg:col-span-4 sticky top-24 will-change-contents ${activeDestination ? 'opacity-100' : 'opacity-50 grayscale'}`} style={{ transition: 'opacity 0.3s ease' }}>
+            <div className={`hidden lg:block lg:col-span-4 sticky top-24 backface-visibility-hidden transform-gpu ${activeDestination ? 'opacity-100' : 'opacity-50 grayscale'}`} style={{ transition: 'opacity 0.3s ease' }}>
               <div className="bg-white rounded-[2rem] p-6 shadow-xl border border-gray-100 h-[500px] flex flex-col items-center justify-center text-center overflow-hidden">
 
                 {activeDestination ? (
@@ -153,7 +153,7 @@ export default function RoutesPage() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="w-full h-full flex flex-col"
+                    className="w-full h-full flex flex-col will-change-contents"
                   >
                     <div className="w-full aspect-video rounded-2xl overflow-hidden mb-6 shadow-md relative">
                       <img src={activeDestination.image} alt={activeDestination.name} className="w-full h-full object-cover" />
@@ -233,7 +233,7 @@ export default function RoutesPage() {
             </div>
 
             {/* Right Column: Interactive Map */}
-            <div className="col-span-1 lg:col-span-8 sticky top-24 will-change-contents">
+            <div className="col-span-1 lg:col-span-8 sticky top-24 backface-visibility-hidden transform-gpu">
               <div
                 className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-6 shadow-2xl border border-gray-100 relative h-[500px] flex flex-col items-center justify-center overflow-hidden"
                 onClick={(e) => e.stopPropagation()} // Prevent clearing when clicking inside map container
@@ -354,7 +354,7 @@ export default function RoutesPage() {
                       initial={{ y: "100%" }}
                       animate={{ y: 0 }}
                       exit={{ y: "100%" }}
-                      transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                      transition={{ type: "tween", ease: "circOut", duration: 0.3 }}
                       // IMPORTANT: This is FIXED at bottom screen on mobile, and HIDDEN on large screens
                       className="fixed bottom-0 left-0 right-0 z-[60] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.2)] p-6 lg:hidden border-t-4 border-[#e96f30]"
                     >
@@ -396,6 +396,6 @@ export default function RoutesPage() {
           </div>
         </div>
       </section>
-    </div>
+    </div >
   );
 }

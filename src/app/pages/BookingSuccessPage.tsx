@@ -9,14 +9,14 @@ import Section from '../components/ui/Section';
 export default function BookingSuccessPage() {
   const location = useLocation();
   const state = location.state || {};
-  const [showConfirmation, setShowConfirmation] = useState(true);
+  // const [showConfirmation, setShowConfirmation] = useState(true); // Removed auto-hide state
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowConfirmation(false);
-    }, 4500); // Show success message then animate out
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setShowConfirmation(false);
+  //   }, 4500);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   // Robustly handle missing or null data
   const tickets = state.tickets || [];
@@ -56,27 +56,17 @@ export default function BookingSuccessPage() {
           </div>
         </div>
 
-        <AnimatePresence>
-          {showConfirmation && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, height: 0, marginBottom: 0, scale: 0.9, overflow: 'hidden' }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="max-w-3xl mx-auto text-center"
-            >
-              <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-green-100 rounded-full mb-6 md:mb-8 shadow-lg shadow-green-100/50 ring-8 ring-green-50 animate-in zoom-in duration-1000">
-                <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-green-600" strokeWidth={3} />
-              </div>
-              <h1 className="font-['Montserrat',sans-serif] font-bold text-3xl md:text-5xl text-primary mb-4">
-                Booking Confirmed!
-              </h1>
-              <p className="font-['Montserrat',sans-serif] text-slate-600 text-base md:text-lg">
-                Your ticket has been successfully generated. A copy has been sent to your email.
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="max-w-3xl mx-auto text-center will-change-transform animate-in fade-in zoom-in duration-700">
+          <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-green-100 rounded-full mb-6 md:mb-8 shadow-lg shadow-green-100/50 ring-8 ring-green-50">
+            <CheckCircle className="w-10 h-10 md:w-12 md:h-12 text-green-600" strokeWidth={3} />
+          </div>
+          <h1 className="font-['Montserrat',sans-serif] font-bold text-3xl md:text-5xl text-primary mb-4">
+            Booking Confirmed!
+          </h1>
+          <p className="font-['Montserrat',sans-serif] text-slate-600 text-base md:text-lg">
+            Your ticket has been successfully generated. A copy has been sent to your email.
+          </p>
+        </div>
 
         {/* Ticket Cards Loop */}
         <motion.div

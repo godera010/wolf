@@ -1,5 +1,6 @@
 import { Camera, Instagram, Maximize2 } from 'lucide-react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 // Import images from assets
 import img1 from '@/assets/image4.webp';
@@ -36,7 +37,12 @@ export default function GalleryPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+        <motion.section
+          className="relative h-[50vh] flex items-center justify-center overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
           <div className="absolute inset-0">
             <img
               src={img5}
@@ -45,15 +51,32 @@ export default function GalleryPage() {
             />
           </div>
           <div className="relative z-10 container mx-auto px-4 text-center">
-            <span className="text-[#e96f30] font-bold uppercase tracking-widest text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-700">Captured Moments</span>
-            <h1 className="font-bold text-4xl md:text-6xl text-white mb-6 drop-shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
+            <motion.span
+              className="text-[#e96f30] font-bold uppercase tracking-widest text-sm mb-4 block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Captured Moments
+            </motion.span>
+            <motion.h1
+              className="font-bold text-4xl md:text-6xl text-white mb-6 drop-shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
               Life on the Road
-            </h1>
-            <p className="text-gray-200 max-w-2xl mx-auto text-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+            </motion.h1>
+            <motion.p
+              className="text-gray-200 max-w-2xl mx-auto text-xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Explore our fleet, our people, and the beautiful landscapes of Zimbabwe through our lens.
-            </p>
+            </motion.p>
           </div>
-        </section>
+        </motion.section>
 
         {/* Gallery Grid */}
         <section className="py-12 pb-24 relative z-10">
@@ -112,25 +135,35 @@ export default function GalleryPage() {
       </div>
 
       {/* Lightbox Modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button
-            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 will-change-[opacity]"
             onClick={() => setSelectedImage(null)}
           >
-            <Maximize2 size={32} className="rotate-45" /> {/* Use rotate-45 as a close X icon substitute or import X */}
-          </button>
-          <img
-            src={selectedImage}
-            alt="Enlarged view"
-            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
-          />
-        </div>
-      )}
+            <button
+              className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+              onClick={() => setSelectedImage(null)}
+            >
+              <Maximize2 size={32} className="rotate-45" /> {/* Use rotate-45 as a close X icon substitute or import X */}
+            </button>
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              src={selectedImage}
+              alt="Enlarged view"
+              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain will-change-[transform,opacity]"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

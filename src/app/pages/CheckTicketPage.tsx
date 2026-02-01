@@ -69,7 +69,7 @@ export default function CheckTicketPage() {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)", transition: { duration: 0.3 } }}
-                className="max-w-xl mx-auto"
+                className="max-w-xl mx-auto will-change-transform"
               >
                 <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-grow">
@@ -100,10 +100,10 @@ export default function CheckTicketPage() {
               /* Ticket Result */
               <motion.div
                 key="ticket-result"
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ type: "spring", bounce: 0.4, duration: 0.8 }}
-                className="w-full"
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-full will-change-transform"
               >
                 <div className="mb-8 flex items-center justify-between">
                   <Button

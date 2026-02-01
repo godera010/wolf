@@ -327,12 +327,11 @@ export default function SeatSelectionPage() {
       </Section>
 
       {/* Mobile Confirmation Modal */}
-      {showMobileConfirm && (
-        <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={() => setShowMobileConfirm(false)} />
-
-          <div className="relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom-full duration-300">
-            {/* Header */}
+          {showMobileConfirm && (
+            <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+              <div className="absolute inset-0 bg-black/60 transition-opacity" onClick={() => setShowMobileConfirm(false)} />
+      
+              <div className="relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom-full duration-300">            {/* Header */}
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
               <h3 className="font-['Montserrat',sans-serif] font-bold text-base text-primary">Confirm Selection</h3>
               <button onClick={() => setShowMobileConfirm(false)} className="p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">

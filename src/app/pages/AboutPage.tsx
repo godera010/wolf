@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Target, Eye, Shield, Bus, MapPin, Users, Heart, Clock, Award } from 'lucide-react';
-import imgHero from '@/assets/background/1.jpg';
+import imgHero from '@/assets/background/4.jpg';
 
 export default function AboutPage() {
     const containerVariants = {
@@ -38,6 +38,7 @@ export default function AboutPage() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
+                        className="will-change-transform"
                     >
                         <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 drop-shadow-lg">
                             Welcome to <span className="text-[#e96f30]">RoadWolf</span>
@@ -50,7 +51,7 @@ export default function AboutPage() {
             </section>
 
             {/* Mission & Vision Section */}
-            <section className="py-20 bg-gray-50">
+            <section className="py-20 bg-gray-50 overflow-hidden">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
                         {/* Mission */}
@@ -59,7 +60,7 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
-                            className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-[#01257d]"
+                            className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-[#01257d] will-change-transform"
                         >
                             <div className="flex items-center mb-6">
                                 <div className="p-4 bg-[#01257d]/10 rounded-full mr-6">
@@ -80,7 +81,7 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
-                            className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-[#e96f30]"
+                            className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-[#e96f30] will-change-transform"
                         >
                             <div className="flex items-center mb-6">
                                 <div className="p-4 bg-[#e96f30]/10 rounded-full mr-6">

@@ -2,8 +2,8 @@
 
 This document summarizes the progress, features, and UI/UX enhancements implemented for the RoadWolf Coach Booking application.
 
-## 🚀 Current Status: **Refactoring & Optimization** - `v0.2.5`
-The application has undergone a significant code cleanup and stabilization phase. All known linting errors, unused assets, and import casing inconsistencies have been resolved. The layout for the Routes page has been refined for better information density.
+## 🚀 Current Status: **UI Polish & Navigation** - `v0.2.7`
+The application retains the **Blue Brand Identity** for the Navbar but leverages the new **Overlay Menu** structure for mobile. The Hero section is optimized for mobile display ("Ride with the Pack") with improved image fitting.
 See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ---

@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import imgLogo from "@/assets/logo3.png";
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Navbar() {
   const location = useLocation();
@@ -22,13 +23,17 @@ export default function Navbar() {
   return (
     <nav className="bg-[#01257d] text-white shadow-lg sticky top-0 z-50 border-b border-white/10 transition-all duration-300">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center group">
+        <div className="flex items-center justify-between h-16 md:h-20">
+
+          {/* Mobile: Spacer to balance the Menu button on the right, keeping Logo centered */}
+          <div className="md:hidden w-10"></div>
+
+          {/* Logo (Centered on Mobile, Left on Desktop) */}
+          <Link to="/" className="flex items-center justify-center group flex-grow md:flex-grow-0">
             <img
               src={imgLogo}
               alt="RoadWolf Coaches"
-              className="h-20 w-auto object-contain -mt-2 transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
+              className="h-12 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
             />
           </Link>
 
@@ -58,41 +63,64 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white hover:text-[#e96f30] transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-3 border-t border-white/10 animate-in slide-in-from-top-2 duration-200">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block font-['Montserrat',sans-serif] font-medium text-[15px] py-3 px-4 rounded-lg transition-colors ${isActive(link.path) ? 'bg-white/10 text-[#e96f30]' : 'text-gray-200 hover:bg-white/5'
-                  }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="pt-2">
-              <Link
-                to="/booking"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block w-full bg-[#e96f30] text-white font-['Montserrat',sans-serif] font-bold text-[15px] px-6 py-3 rounded-full text-center shadow-lg active:scale-95 transition-transform"
-              >
-                Book Now
-              </Link>
-            </div>
+          <div className="md:hidden w-10 flex justify-end">
+            <button
+              className="text-white hover:text-[#e96f30] transition-colors p-1"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <Menu size={28} strokeWidth={2.5} />
+            </button>
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Mobile Navigation Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden absolute top-full left-0 w-full bg-[#01257d] border-t border-white/10 shadow-xl overflow-hidden"
+          >
+            <div className="container mx-auto px-4 py-6 space-y-2">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.path}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Link
+                    to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block font-['Montserrat',sans-serif] font-medium text-lg py-3 px-4 rounded-xl transition-all ${isActive(link.path) ? 'text-[#e96f30]' : 'text-gray-200 hover:bg-white/5'
+                      }`}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="pt-4"
+              >
+                <Link
+                  to="/booking"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full bg-[#e96f30] text-white font-['Montserrat',sans-serif] font-bold text-lg px-6 py-4 rounded-xl text-center shadow-lg active:scale-95 transition-transform"
+                >
+                  Book Now
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

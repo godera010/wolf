@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
+import LoadingScreen from './components/LoadingScreen';
 
 // Lazy load pages to reduce initial bundle size and memory usage
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -16,6 +17,18 @@ const GalleryPage = lazy(() => import('./pages/GalleryPage'));
 const CheckTicketPage = lazy(() => import('./pages/CheckTicketPage'));
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Very short branded loading (400ms) - fast but shows logo
+    const timer = setTimeout(() => setLoading(false), 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>

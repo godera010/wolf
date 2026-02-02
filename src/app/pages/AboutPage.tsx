@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Target, Eye, Shield, Bus, MapPin, Users, Heart, Clock, Award } from 'lucide-react';
-import imgHero from '@/assets/background/4.jpg';
+import imgHero from '@/assets/background/4.webp';
 
 export default function AboutPage() {
     const containerVariants = {
@@ -24,82 +24,73 @@ export default function AboutPage() {
 
     return (
         <div className="min-h-screen bg-white font-['Montserrat',sans-serif]">
-            {/* Hero Section */}
-            <section className="relative h-[50vh] md:h-[60vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0">
-                    <img
-                        src={imgHero}
-                        alt="RoadWolf Bus on the road"
-                        className="w-full h-full object-cover brightness-50"
-                    />
-                </div>
-                <div className="relative z-10 container mx-auto px-4 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className=""
+            {/* Standardized Header (CheckTicketPage Style) */}
+            <section className="py-12 md:py-20 bg-white overflow-hidden">
+                <div className="container mx-auto px-4 text-center">
+                    <h1
+                        className="text-[#01257d] font-bold text-4xl md:text-6xl mb-6 leading-tight font-['Montserrat',sans-serif] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
                     >
-                        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 drop-shadow-lg">
-                            Welcome to <span className="text-[#e96f30]">RoadWolf</span>
-                        </h1>
-                        <p className="text-lg md:text-2xl text-gray-200 max-w-2xl mx-auto px-4">
-                            Redefining bus travel across Zimbabwe with comfort, safety, and reliability.
-                        </p>
-                    </motion.div>
+                        Welcome to <span className="text-[#e96f30]">RoadWolf</span>
+                    </h1>
+                    <p
+                        className="text-lg md:text-xl text-slate-500 font-normal leading-relaxed max-w-2xl mx-auto font-['Montserrat',sans-serif] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200"
+                    >
+                        Redefining bus travel across Zimbabwe with comfort, safety, and reliability.
+                    </p>
                 </div>
             </section>
 
-            {/* Mission & Vision Section */}
-            <section className="py-20 bg-gray-50 overflow-hidden">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-                        {/* Mission */}
+            {/* Mission & Vision Section - With Background */}
+            <section
+                className="py-20 relative overflow-hidden bg-fixed bg-cover bg-center"
+                style={{ backgroundImage: `url(${imgHero})` }}
+            >
+                {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-[#01257d]/85 z-0"></div>
+
+                <div className="container mx-auto px-4 relative z-10">
+                    {/* Staggered Card Container - Non-overlapping */}
+                    <div className="flex flex-col md:flex-row md:items-start items-center justify-center max-w-6xl mx-auto">
+
+                        {/* Card 1: Mission (Top-Left) */}
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
-                            className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-[#01257d]"
+                            className="group relative bg-white/10 backdrop-blur-md border border-white/20 p-10 md:p-12 rounded-[2.5rem] shadow-2xl transition-all duration-500 hover:-translate-y-2 w-full md:w-[550px] min-h-[320px] md:min-h-[350px] flex flex-col justify-start flex-shrink-0"
                         >
-                            <div className="flex items-center mb-6">
-                                <div className="p-4 bg-[#01257d]/10 rounded-full mr-6">
-                                    <Target className="w-10 h-10 text-[#01257d]" />
-                                </div>
-                                <h2 className="text-3xl font-bold text-[#01257d]">Our Mission</h2>
+                            <div className="mb-6">
+                                <Target className="w-12 h-12 text-[#e96f30]" />
                             </div>
-                            <p className="text-gray-600 leading-relaxed text-lg">
-                                At Road Wolf our mission is to provide safe and reliable transportation that connects communities.
-                                We are committed to delivering exceptional customer service, ensuring comfort, convenience, and safety on every journey.
-                                Furthermore, we strive to contribute to a sustainable transportation future.
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Mission</h2>
+                            <p className="text-gray-200 text-xl md:text-2xl leading-relaxed">
+                                To provide safe and reliable transportation that connects communities with exceptional service and uncompromising commitment to excellence.
                             </p>
                         </motion.div>
 
-                        {/* Vision */}
+                        {/* Card 2: Vision (Bottom-Right with proper spacing) */}
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border-l-8 border-[#e96f30]"
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="group relative bg-white/10 backdrop-blur-md border border-white/20 p-10 md:p-12 rounded-[2.5rem] shadow-2xl transition-all duration-500 hover:-translate-y-2 w-full md:w-[550px] min-h-[320px] md:min-h-[350px] flex flex-col justify-start flex-shrink-0 mt-12 md:mt-[180px] md:ml-[80px]"
                         >
-                            <div className="flex items-center mb-6">
-                                <div className="p-4 bg-[#e96f30]/10 rounded-full mr-6">
-                                    <Eye className="w-10 h-10 text-[#e96f30]" />
-                                </div>
-                                <h2 className="text-3xl font-bold text-[#01257d]">Our Vision</h2>
+                            <div className="mb-6">
+                                <Eye className="w-12 h-12 text-[#e96f30]" />
                             </div>
-                            <p className="text-gray-600 leading-relaxed text-lg">
-                                To be the leading provider of transportation in Zimbabwe, enhancing mobility while promoting sustainability
-                                within the transportation industry in Zimbabwe.
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Vision</h2>
+                            <p className="text-gray-200 text-xl md:text-2xl leading-relaxed">
+                                To be the leading provider of transportation in Zimbabwe, pioneering sustainable mobility solutions for future generations.
                             </p>
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Services Offered */}
-            <section className="py-12 md:py-20">
+            < section className="py-12 md:py-20" >
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-10 md:mb-16">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#01257d] mb-4">Services Offered</h2>
@@ -114,7 +105,7 @@ export default function AboutPage() {
                             <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-500"></div>
                             <Bus className="w-12 h-12 text-[#e96f30] mb-6" />
                             <h3 className="text-2xl font-bold mb-4">Inter-City Travel</h3>
-                            <p className="text-gray-200 leading-relaxed text-lg">
+                            <p className="text-gray-200 leading-relaxed text-xl">
                                 Daily bus services connecting <strong>Harare</strong> and <strong>Victoria Falls</strong>.
                                 With convenient stops and scheduled departures in:
                             </p>
@@ -134,7 +125,7 @@ export default function AboutPage() {
                             <div className="absolute top-0 right-0 w-32 h-32 bg-[#e96f30]/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 duration-500"></div>
                             <Users className="w-12 h-12 text-[#e96f30] mb-6" />
                             <h3 className="text-2xl font-bold mb-4">Private Charters</h3>
-                            <p className="text-gray-600 leading-relaxed text-lg">
+                            <p className="text-gray-600 leading-relaxed text-xl">
                                 Exclusive bus rentals tailored for your specific needs. Perfect for:
                             </p>
                             <ul className="mt-4 space-y-3">
@@ -154,15 +145,15 @@ export default function AboutPage() {
                         </motion.div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Safety Section */}
-            <section
+            < section
                 className="py-20 text-white relative overflow-hidden bg-fixed bg-cover bg-center"
                 style={{ backgroundImage: `url(${imgHero})` }}
             >
                 {/* Dark Overlay with Parallax Backup */}
-                <div className="absolute inset-0 bg-[#01257d]/90 z-0"></div>
+                < div className="absolute inset-0 bg-[#01257d]/90 z-0" ></div >
 
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
@@ -193,10 +184,10 @@ export default function AboutPage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Why Choose Us / Values (Extra content) */}
-            <section className="py-20 bg-white">
+            < section className="py-20 bg-white" >
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-4xl font-bold text-[#01257d]">Why Choose RoadWolf?</h2>
@@ -230,7 +221,7 @@ export default function AboutPage() {
                         ))}
                     </motion.div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }

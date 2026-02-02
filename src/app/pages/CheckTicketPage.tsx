@@ -51,7 +51,7 @@ export default function CheckTicketPage() {
             className="flex-shrink-0"
           >
             <PageHero
-              title="Check Your Ticket"
+              title={<>Check Your <span className="text-[#e96f30]">Ticket</span></>}
               subtitle="Enter your ticket number to view your booking details"
               className="pb-6 md:pb-8"
             />

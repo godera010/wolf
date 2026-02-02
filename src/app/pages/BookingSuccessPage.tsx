@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { CheckCircle, Download, Printer, ChevronRight } from 'lucide-react';
 import TicketCard from '../components/TicketCard';

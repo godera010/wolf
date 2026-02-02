@@ -17,30 +17,27 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  // Performance optimizations
+  // Production build optimizations for low-end mobile devices
   build: {
-    // Optimize chunk splitting
+    target: 'es2017', // Better compatibility + faster parsing on old devices
+    sourcemap: false, // Reduce bundle size, no debug maps in production
+    minify: 'esbuild', // Fast minification
+    cssMinify: true, // Minify CSS
+    chunkSizeWarningLimit: 900, // Reduced from 1000
+
     rollupOptions: {
       output: {
         manualChunks: {
+          // Core React libraries (used on every page)
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'motion': ['motion/react'],
+          // Animation library (heavy, separate chunk)
+          'motion': ['framer-motion'],
+          // Icons (moderate size)
           'icons': ['lucide-react'],
+          // Toast notifications
+          'sonner': ['sonner'],
         },
       },
-    },
-    // Increase chunk size warning limit
-    chunkSizeWarningLimit: 1000,
-  },
-  // Optimize dev server
-  server: {
-    // Enable faster HMR
-    hmr: {
-      overlay: true,
-    },
-    // Optimize warm-up
-    warmup: {
-      clientFiles: ['./src/app/pages/HomePage.tsx', './src/main.tsx'],
     },
   },
   // Image optimization

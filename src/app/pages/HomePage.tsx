@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 // Eagerly load first hero image for LCP
 import imgHero1 from "@/assets/background/7.webp";
 // Lazy load remaining hero images
-const imgHero2 = () => import("@/assets/background/3.jpg").then(m => m.default);
-const imgHero3 = () => import("@/assets/background/4.jpg").then(m => m.default);
-const imgHero4 = () => import("@/assets/background/5.jpeg").then(m => m.default);
+const imgHero2 = () => import("@/assets/background/3.webp").then(m => m.default);
+const imgHero3 = () => import("@/assets/background/4.webp").then(m => m.default);
+const imgHero4 = () => import("@/assets/background/5.webp").then(m => m.default);
 import { Timer, Milestone, Armchair, CircleDollarSign, Star, ArrowRight, Wifi, Zap, Wind } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, Variants } from "motion/react";
@@ -156,17 +156,11 @@ export default function HomePage() {
             />
           ))}
         </div>          {/* Enhanced Overlay */}
-        <div className="relative z-10 container mx-auto px-4 flex flex-col items-start gap-6 md:gap-8">
-          {/* Centered Badge outside the card */}
-          <div className="w-full flex justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
-            <span className="inline-block py-2 px-4 rounded-full bg-[#e96f30] text-white text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] shadow-lg">
-              Premium Travel Experience
-            </span>
-          </div>
-
-          {/* Glassmorphism Card Wrapper */}
-          <div className="bg-black/40 rounded-3xl p-6 md:p-12 max-w-2xl w-full text-center md:text-left animate-in fade-in slide-in-from-bottom-8 duration-1000 mx-auto md:mx-0">
-            <h1 className="font-bold text-3xl md:text-5xl lg:text-6xl text-white mb-6 md:mb-8 leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">              Ride with the Pack – <br />
+        {/* Full Coverage Overlay - Edge to Edge */}
+        <div className="absolute inset-0 z-10 bg-black/40 flex flex-col items-center justify-center gap-6 md:gap-8 px-4">
+          {/* Content Container */}
+          <div className="p-6 md:p-12 w-full max-w-4xl text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
+            <h1 className="font-black text-2xl md:text-4xl lg:text-5xl text-white mb-6 md:mb-8 leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">              Ride with the Pack – <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white">
                 Travel Smarter, Faster, Wilder
               </span>

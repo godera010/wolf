@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion';
 import { cn } from './utils';
 
 interface PageHeroProps {
-    title: string;
+    title: React.ReactNode;
     subtitle?: string;
     label?: string;
     className?: string;

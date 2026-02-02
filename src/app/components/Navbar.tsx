@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import imgLogo from "@/assets/logo3.png";
+import imgLogo from "@/assets/logo3.svg";
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -33,7 +33,7 @@ export default function Navbar() {
             <img
               src={imgLogo}
               alt="RoadWolf Coaches"
-              className="h-12 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
+              className="h-12 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 

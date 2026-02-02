@@ -5,13 +5,13 @@ import { MapPin, ArrowRight, Bus, Info } from 'lucide-react';
 // Placeholder Assets (Keeping existing imports)
 // Real Route Assets
 import imgHarare from '@/assets/routes/harare.webp';
-import imgBulawayo from '@/assets/background/3.jpg'; // Fallback
-import imgGweru from '@/assets/routes/gweru.jpg';
-import imgKwekwe from '@/assets/routes/Kwekwe.jpg';
-import imgKadoma from '@/assets/routes/kadoma.jpg';
-import imgChegutu from '@/assets/routes/chegutu.webp';
-import imgHeroBg from '@/assets/background/5.jpeg';
-import logo from '@/assets/logo3.png';
+import imgBulawayo from '@/assets/routes/bulawayo.webp';
+import imgGweru from '@/assets/routes/gweru.webp';
+import imgKwekwe from '@/assets/routes/kwekwe.webp';
+import imgKadoma from '@/assets/routes/kadoma.webp';
+import imgChegutu from '@/assets/routes/harare.webp'; // Fallback, chegutu.webp doesn't exist
+
+import logo from '@/assets/logo3.svg';
 
 // Destination Data
 const destinations = [
@@ -120,17 +120,16 @@ export default function RoutesPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] font-['Montserrat',sans-serif]" onClick={clearSelection}>
 
-      <section className="relative pt-32 pb-24 overflow-hidden -mt-20">
-        {/* Background Layer */}
-        <div className="absolute inset-0 z-0">
-          <img src={imgHeroBg} alt="RoadWolf Network" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#01257d]/95 via-[#01257d]/85 to-[#e96f30]/20 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-black/30"></div>
-        </div>
-
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-xl tracking-tight">Our Routes & Network</h1>
-          <p className="text-blue-50 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed font-medium drop-shadow-md">
+      <section className="py-12 md:py-20 bg-white overflow-hidden">
+        <div className="container mx-auto px-4 text-center">
+          <h1
+            className="text-[#01257d] font-bold text-4xl md:text-6xl mb-6 leading-tight font-['Montserrat',sans-serif] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
+          >
+            Our Routes & <span className="text-[#e96f30]">Network</span>
+          </h1>
+          <p
+            className="text-lg md:text-xl text-slate-500 font-normal leading-relaxed max-w-2xl mx-auto font-['Montserrat',sans-serif] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200"
+          >
             Discover our extensive bus routes connecting Zimbabwe's major cities.
             <br className="hidden md:block" />
             <span className="text-[#e96f30] font-bold">Scroll down</span> to interact with our live map and view stop details.

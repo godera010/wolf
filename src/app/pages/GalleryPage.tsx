@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from 'motion/react';
 // Import images from assets
 import img1 from '@/assets/image4.webp';
 import img2 from '@/assets/image5.webp';
-import img3 from '@/assets/image6.png';
-import img4 from '@/assets/image10.jpeg';
-import img5 from '@/assets/image11.jpeg';
-import img6 from '@/assets/imag12.jpeg';
-import img7 from '@/assets/image7.jpeg';
+import img3 from '@/assets/image6.webp';
+import img4 from '@/assets/image10.webp';
+import img5 from '@/assets/image11.webp';
+import img6 from '@/assets/imag12.webp';
+import img7 from '@/assets/image7.webp';
 import img8 from '@/assets/image1.webp';
 
 export default function GalleryPage() {
@@ -30,29 +30,17 @@ export default function GalleryPage() {
     <div className="bg-white overflow-x-hidden flex flex-col flex-grow relative">
 
       <div className="flex-grow relative">
-        {/* Background Blobs */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[5%] left-[-5%] w-[500px] h-[500px] bg-blue-100/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-orange-100/30 rounded-full blur-3xl" />
-        </div>
-
-        {/* Hero Section */}
-        <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src={img5}
-              alt="RoadWolf Life on the Road"
-              className="w-full h-full object-cover brightness-50"
-            />
-          </div>
-          <div className="relative z-10 container mx-auto px-4 text-center">
-            <span className="text-[#e96f30] font-bold uppercase tracking-widest text-sm mb-4 block animate-in fade-in slide-in-from-bottom-4 duration-500">
-              Captured Moments
-            </span>
-            <h1 className="font-bold text-4xl md:text-6xl text-white mb-6 drop-shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
-              Life on the Road
+        {/* Standardized Header (CheckTicketPage Style) */}
+        <section className="py-12 md:py-20 bg-white overflow-hidden">
+          <div className="container mx-auto px-4 text-center">
+            <h1
+              className="text-[#01257d] font-bold text-4xl md:text-6xl mb-6 leading-tight font-['Montserrat',sans-serif] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100"
+            >
+              Captured <span className="text-[#e96f30]">Moments</span>
             </h1>
-            <p className="text-gray-200 max-w-2xl mx-auto text-xl animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
+            <p
+              className="text-lg md:text-xl text-slate-500 font-normal leading-relaxed max-w-2xl mx-auto font-['Montserrat',sans-serif] animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200"
+            >
               Explore our fleet, our people, and the beautiful landscapes of Zimbabwe through our lens.
             </p>
           </div>

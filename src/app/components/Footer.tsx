@@ -12,6 +12,8 @@ export default function Footer() {
             <img
               src={imgLogo}
               alt="RoadWolf Coaches"
+              width={200}
+              height={80}
               className="h-20 w-auto object-contain mb-4"
             />
             <p className="font-['Montserrat',sans-serif] text-sm text-gray-300 mb-4">

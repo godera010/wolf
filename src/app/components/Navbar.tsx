@@ -33,6 +33,8 @@ export default function Navbar() {
             <img
               src={imgLogo}
               alt="RoadWolf Coaches"
+              width={200}
+              height={80}
               className="h-12 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
@@ -46,17 +48,17 @@ export default function Navbar() {
                 className="relative group"
               >
                 <span
-                  className={`font-['Montserrat',sans-serif] font-medium text-[15px] transition-colors duration-200 ${isActive(link.path) ? 'text-[#e96f30]' : 'text-gray-200 hover:text-[#e96f30]'
+                  className={`font-['Montserrat',sans-serif] font-medium text-[15px] transition-colors duration-200 ${isActive(link.path) ? 'text-[#d84315]' : 'text-gray-200 hover:text-[#d84315]'
                     }`}
                 >
                   {link.label}
                 </span>
-                <span className={`absolute -bottom-1 left-0 h-[2px] bg-[#e96f30] transition-all duration-300 ${isActive(link.path) ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+                <span className={`absolute -bottom-1 left-0 h-[2px] bg-[#d84315] transition-all duration-300 ${isActive(link.path) ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
             ))}
             <Link
               to="/booking"
-              className="bg-[#e96f30] hover:bg-[#d55f26] text-white font-['Montserrat',sans-serif] font-bold text-[15px] px-8 py-3 rounded-full shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+              className="bg-[#d84315] hover:bg-[#bf360c] text-white font-['Montserrat',sans-serif] font-bold text-[15px] px-8 py-3 rounded-full shadow-lg hover:-translate-y-0.5 transition-all duration-300"
             >
               Book Now
             </Link>

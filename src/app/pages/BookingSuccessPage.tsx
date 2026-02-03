@@ -1,5 +1,4 @@
 import { useLocation, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 
 import { CheckCircle, Download, Printer, ChevronRight } from 'lucide-react';
 import TicketCard from '../components/TicketCard';
@@ -8,14 +7,6 @@ import Section from '../components/ui/Section';
 export default function BookingSuccessPage() {
   const location = useLocation();
   const state = location.state || {};
-  // const [showConfirmation, setShowConfirmation] = useState(true); // Removed auto-hide state
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setShowConfirmation(false);
-  //   }, 4500);
-  //   return () => clearTimeout(timer);
-  // }, []);
 
   // Robustly handle missing or null data
   const tickets = state.tickets || [];
@@ -67,26 +58,22 @@ export default function BookingSuccessPage() {
           </p>
         </div>
 
-        {/* Ticket Cards Loop */}
-        <motion.div
-          layout
-          className="space-y-8 mt-8"
-        >
+        {/* Ticket Cards Loop - CSS animations instead of Framer Motion */}
+        <div className="space-y-8 mt-8">
           {displayTickets.map((ticket: any, index: number) => (
-            <motion.div
+            <div
               key={ticket.id || index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
+              className="animate-in fade-in zoom-in-95 duration-500"
+              style={{ animationDelay: `${0.2 + (index * 0.1)}s`, animationFillMode: 'backwards' }}
             >
               <TicketCard
                 ticket={ticket}
                 bookingDetails={bookingDetails}
                 totalAmount={amount ? amount : 20 * selectedSeats.length}
               />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mt-12">

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 // Eagerly load first hero image for LCP
-import imgHero1 from "@/assets/background/7.webp";
+import imgHero1 from "@/assets/background/optimized/7.webp";
 // Lazy load remaining hero images
-const imgHero2 = () => import("@/assets/background/3.webp").then(m => m.default);
-const imgHero3 = () => import("@/assets/background/4.webp").then(m => m.default);
-const imgHero4 = () => import("@/assets/background/5.webp").then(m => m.default);
+const imgHero2 = () => import("@/assets/background/optimized/3.webp").then(m => m.default);
+const imgHero3 = () => import("@/assets/background/optimized/4.webp").then(m => m.default);
+const imgHero4 = () => import("@/assets/background/optimized/5.webp").then(m => m.default);
 import { Timer, Milestone, Armchair, CircleDollarSign, Star, ArrowRight, Wifi, Zap, Wind } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, Variants } from "motion/react";
@@ -151,6 +151,9 @@ export default function HomePage() {
               key={index}
               src={image}
               alt={`RoadWolf Coach ${index + 1}`}
+              width={index === 0 ? 1000 : 800}
+              height={index === 0 ? 700 : 600}
+              loading={index === 0 ? "eager" : "lazy"}
               className={`absolute inset-0 w-full h-full md:object-cover object-cover transform md:scale-105 transition-opacity duration-[2000ms] ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
                 }`}
             />
@@ -169,7 +172,7 @@ export default function HomePage() {
             <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
               <Link
                 to="/booking"
-                className="group w-auto relative inline-flex items-center justify-center bg-[#e96f30] hover:bg-[#d55f26] text-white font-bold text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(233,111,48,0.5)] hover:shadow-[0_0_30px_rgba(233,111,48,0.7)] hover:-translate-y-1 active:scale-95"
+                className="group w-auto relative inline-flex items-center justify-center bg-[#d84315] hover:bg-[#bf360c] text-white font-bold text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(216,67,21,0.5)] hover:shadow-[0_0_30px_rgba(216,67,21,0.7)] hover:-translate-y-1 active:scale-95"
               >
                 <span>Book a seat now</span>
                 <ArrowRight className="ml-3 w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />

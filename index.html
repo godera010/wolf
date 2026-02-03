@@ -3,8 +3,20 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/x-icon" href="/src/assets/wolf.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Preconnect (fonts) - establish connections early -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- DNS Prefetch fallback for older browsers -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+
+  <!-- Note: Hero preloading handled via fetchpriority="high" in React component -->
+  <!-- Vite hashes asset filenames, making static preloads unreliable -->
+
+  <link rel="icon" type="image/x-icon" href="/src/assets/wolf.ico" />
   <title>RoadWolf - Premium Bus Travel in Zimbabwe</title>
   <meta name="description"
     content="Travel smarter, faster, wilder with RoadWolf. Book comfortable bus tickets across Zimbabwe with WiFi, charging ports & reliable service." />

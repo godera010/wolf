@@ -373,7 +373,7 @@ export default function BookingPage() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5 }}
+                  transition={{ duration: 0.35 }}
                   className="space-y-6 will-change-transform"
                 >
                   {/* Header */}
@@ -411,7 +411,7 @@ export default function BookingPage() {
                         key={bus.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.1 }}
+                        transition={{ delay: idx * 0.075, duration: 0.25 }}
                       >
                         <div className="bg-white rounded-2xl p-5 border border-slate-100 hover:border-[#e96f30]/30 hover:shadow-lg transition-all duration-300 group">
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -505,7 +505,7 @@ export default function BookingPage() {
 
       {/* Mobile Sticky Search Summary */}
       {showResults && (
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_30px_-10px_rgba(0,0,0,0.15)] md:hidden z-50 animate-in slide-in-from-bottom-full duration-500">
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_30px_-10px_rgba(0,0,0,0.15)] md:hidden z-50 animate-in slide-in-from-bottom-full duration-300">
           <div className="flex items-center justify-between gap-4 max-w-md mx-auto">
             <div className="flex flex-col flex-grow justify-center min-w-0 pr-2">
               <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em] mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis">

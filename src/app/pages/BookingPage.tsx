@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePerformance } from "@/hooks/usePerformance";
 import {
   Select,
   SelectContent,
@@ -91,6 +92,7 @@ const MOCK_BUSES: Bus[] = [
 
 export default function BookingPage() {
   const navigate = useNavigate();
+  const { tier } = usePerformance();
   // const dateInputRef = useRef<HTMLInputElement>(null); // Removed unused ref
   // const [showTitle, setShowTitle] = useState(true); // Removed auto-hide state
   const [showResults, setShowResults] = useState(false);
@@ -196,11 +198,11 @@ export default function BookingPage() {
             {!showResults && (
               <motion.div
                 layout
-                initial={{ opacity: 0, y: 20 }}
+                initial={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, height: 0, marginBottom: 0, y: -20 }}
-                transition={{ duration: 0.7, ease: "easeInOut" }}
-                className="overflow-hidden"
+                exit={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { opacity: 0, height: 0, marginBottom: 0, y: -20 }}
+                transition={tier === 'low' ? { duration: 0.05 } : tier === 'mid' ? { duration: 0.2 } : { duration: 0.7, ease: "easeInOut" }}
+                className="overflow-hidden gpu-accelerated"
               >
                 <h1 className="font-['Montserrat',sans-serif] font-bold text-3xl md:text-6xl text-center mb-2 md:mb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-sm">
                   Start Your Journey
@@ -224,10 +226,11 @@ export default function BookingPage() {
                 /* Search Form */
                 <motion.div
                   key="search-form"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5 }}
+                  exit={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { opacity: 0, x: -20 }}
+                  transition={tier === 'low' ? { duration: 0.05 } : tier === 'mid' ? { duration: 0.15 } : { duration: 0.5 }}
+                  className="gpu-accelerated"
                 >
                   <div className="bg-white/80 backdrop-blur-sm border border-white/50 rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] p-6 md:p-8 lg:p-10">
                     <div className="mb-8 text-center lg:text-left">
@@ -370,15 +373,15 @@ export default function BookingPage() {
                 /* Search Results */
                 <motion.div
                   key="search-results"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.35 }}
-                  className="space-y-6 will-change-transform"
+                  exit={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { opacity: 0, x: -20 }}
+                  transition={tier === 'low' ? { duration: 0.05 } : tier === 'mid' ? { duration: 0.15 } : { duration: 0.35 }}
+                  className="space-y-6 will-change-transform gpu-accelerated"
                 >
                   {/* Header */}
 
-                  <div className="flex items-center justify-between bg-white/60 backdrop-blur-md p-6 rounded-2xl border border-white/50 shadow-sm transition-all duration-300 md:mb-8">
+                  <div className={`flex items-center justify-between p-6 rounded-2xl border shadow-sm transition-all duration-300 md:mb-8 ${tier === 'low' ? 'bg-white border-slate-100' : tier === 'mid' ? 'bg-white/80 border-slate-100' : 'bg-white/60 backdrop-blur-md border-white/50'}`}>
                     <div className="flex-grow">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="text-[10px] uppercase font-black text-[#e96f30] tracking-[0.2em] md:hidden">Current Search</span>
@@ -409,9 +412,9 @@ export default function BookingPage() {
                     {MOCK_BUSES.map((bus, idx) => (
                       <motion.div
                         key={bus.id}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0, y: 10 } : { opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.075, duration: 0.25 }}
+                        transition={tier === 'low' ? { duration: 0.05 } : tier === 'mid' ? { delay: idx * 0.03, duration: 0.15 } : { delay: idx * 0.075, duration: 0.25 }}
                       >
                         <div className="bg-white rounded-2xl p-5 border border-slate-100 hover:border-[#e96f30]/30 hover:shadow-lg transition-all duration-300 group">
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -505,7 +508,7 @@ export default function BookingPage() {
 
       {/* Mobile Sticky Search Summary */}
       {showResults && (
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_30px_-10px_rgba(0,0,0,0.15)] md:hidden z-50 animate-in slide-in-from-bottom-full duration-300">
+        <div className={`fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_30px_-10px_rgba(0,0,0,0.15)] md:hidden z-50 gpu-accelerated ${tier === 'low' ? '' : tier === 'mid' ? 'animate-in fade-in duration-150' : 'animate-in slide-in-from-bottom-full duration-300'}`}>
           <div className="flex items-center justify-between gap-4 max-w-md mx-auto">
             <div className="flex flex-col flex-grow justify-center min-w-0 pr-2">
               <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em] mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis">

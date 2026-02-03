@@ -179,3 +179,72 @@
     line-height: 1.5;
   }
 }
+
+/* ============================================
+   PERFORMANCE OPTIMIZATION UTILITIES
+   ============================================ */
+
+/**
+ * GPU Hardware Acceleration
+ * Apply to animated elements to move them to compositor layer
+ */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/**
+ * Low-end device optimizations
+ * Applied via JS when usePerformance detects low-end device
+ */
+.low-power-mode .blur-effect {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.low-power-mode .heavy-blur {
+  filter: none !important;
+  opacity: 0.8;
+}
+
+/**
+ * Respect user preference for reduced motion
+ * This is a progressive enhancement - works even without JS
+ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable heavy effects */
+  .blur-effect,
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/**
+ * Fixed position elements should use GPU compositing
+ * This prevents jank on mobile scroll
+ */
+.fixed,
+[class*="fixed"] {
+  transform: translateZ(0);
+}
+
+/**
+ * Smooth scrolling only for high-end devices
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

@@ -3,10 +3,12 @@ import imgLogo from "@/assets/logo3.svg";
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { usePerformance } from '@/hooks/usePerformance';
 
 export default function Navbar() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { tier } = usePerformance();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -19,6 +21,64 @@ export default function Navbar() {
     { path: '/gallery', label: 'Gallery' },
     { path: '/about', label: 'About Us' },
   ];
+
+  // 3-tier performance-optimized animation variants
+  const menuContainerVariants = tier === 'low'
+    ? {
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      exit: { opacity: 0 },
+      transition: { duration: 0.05 }
+    }
+    : tier === 'mid'
+      ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+        transition: { duration: 0.15 }
+      }
+      : {
+        initial: { opacity: 0, height: 0 },
+        animate: { opacity: 1, height: 'auto' },
+        exit: { opacity: 0, height: 0 },
+        transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] as const }
+      };
+
+  const menuItemVariants = (index: number) => tier === 'low'
+    ? {
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      transition: { duration: 0.05 }
+    }
+    : tier === 'mid'
+      ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { delay: index * 0.02 }
+      }
+      : {
+        initial: { opacity: 0, x: -20 },
+        animate: { opacity: 1, x: 0 },
+        transition: { delay: index * 0.05 }
+      };
+
+  const bookNowVariants = tier === 'low'
+    ? {
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      transition: { duration: 0.05 }
+    }
+    : tier === 'mid'
+      ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.15 }
+      }
+      : {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+        transition: { delay: 0.3 }
+      };
 
   return (
     <nav className="bg-[#01257d] text-white shadow-lg sticky top-0 z-50 border-b border-white/10 transition-all duration-300">
@@ -77,38 +137,41 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation Overlay */}
+      {/* Mobile Navigation Overlay - Performance Optimized */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden absolute top-full left-0 w-full bg-[#01257d] border-t border-white/10 shadow-xl overflow-hidden"
+            initial={menuContainerVariants.initial}
+            animate={menuContainerVariants.animate}
+            exit={menuContainerVariants.exit}
+            transition={menuContainerVariants.transition}
+            className={`md:hidden absolute top-full left-0 w-full bg-[#01257d] border-t border-white/10 shadow-xl overflow-hidden gpu-accelerated`}
           >
             <div className="container mx-auto px-4 py-6 space-y-2">
-              {navLinks.map((link, index) => (
-                <motion.div
-                  key={link.path}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <Link
-                    to={link.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`block font-['Montserrat',sans-serif] font-medium text-lg py-3 px-4 rounded-xl transition-all ${isActive(link.path) ? 'text-[#e96f30]' : 'text-gray-200 hover:bg-white/5'
-                      }`}
+              {navLinks.map((link, index) => {
+                const itemVariants = menuItemVariants(index);
+                return (
+                  <motion.div
+                    key={link.path}
+                    initial={itemVariants.initial}
+                    animate={itemVariants.animate}
+                    transition={itemVariants.transition}
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      to={link.path}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`block font-['Montserrat',sans-serif] font-medium text-lg py-3 px-4 rounded-xl transition-all ${isActive(link.path) ? 'text-[#e96f30]' : 'text-gray-200 hover:bg-white/5'
+                        }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                initial={bookNowVariants.initial}
+                animate={bookNowVariants.animate}
+                transition={bookNowVariants.transition}
                 className="pt-4"
               >
                 <Link
@@ -126,3 +189,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

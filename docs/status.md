@@ -2,8 +2,8 @@
 
 This document summarizes the progress, features, and UI/UX enhancements implemented for the RoadWolf Coach Booking application.
 
-## 🚀 Current Status: **UI Polish & Navigation** - `v0.2.7`
-The application retains the **Blue Brand Identity** for the Navbar but leverages the new **Overlay Menu** structure for mobile. The Hero section is optimized for mobile display ("Ride with the Pack") with improved image fitting.
+## 🚀 Current Status: **Performance & PDF** - `v0.3.0`
+Implemented 3-tier performance optimization (HIGH/MID/LOW) for smooth animations across all devices. Added PDF ticket download functionality using `@react-pdf/renderer` with multi-ticket support.
 See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ---
@@ -83,5 +83,7 @@ See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes.
 
 ## 🔜 Next Steps (Recommendations)
 - [ ] Integration with a real backend/API for live scheduling.
-- [ ] Client-side PDF generation logic.
+- [x] Client-side PDF generation logic. ✅ **Completed in v0.3.0**
 - [ ] SMS notification integration.
+- [ ] Performance testing on LOW/MID tier devices.
+

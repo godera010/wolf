@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, ArrowRight, Bus, Info } from 'lucide-react';
+import { usePerformance } from '@/hooks/usePerformance';
 
 // Placeholder Assets (Keeping existing imports)
 // Real Route Assets
@@ -104,6 +105,7 @@ const destinations = [
 export default function RoutesPage() {
   const [hoveredDestination, setHoveredDestination] = useState<any>(null);
   const [selectedDestination, setSelectedDestination] = useState<any>(null);
+  const { tier } = usePerformance();
 
   // Active destination is either one clicked or one being hovered
   const activeDestination = hoveredDestination || selectedDestination;
@@ -350,12 +352,12 @@ export default function RoutesPage() {
                   {activeDestination && (
                     <motion.div
                       key={activeDestination.id}
-                      initial={{ y: "100%" }}
-                      animate={{ y: 0 }}
-                      exit={{ y: "100%" }}
-                      transition={{ type: "tween", ease: "circOut", duration: 0.3 }}
+                      initial={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0, y: 20 } : { y: "100%" }}
+                      animate={tier === 'low' ? { opacity: 1 } : tier === 'mid' ? { opacity: 1, y: 0 } : { y: 0 }}
+                      exit={tier === 'low' ? { opacity: 0 } : tier === 'mid' ? { opacity: 0 } : { y: "100%" }}
+                      transition={tier === 'low' ? { duration: 0.05 } : tier === 'mid' ? { duration: 0.15 } : { type: "tween", ease: "circOut", duration: 0.3 }}
                       // IMPORTANT: This is FIXED at bottom screen on mobile, and HIDDEN on large screens
-                      className="fixed bottom-0 left-0 right-0 z-[60] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.2)] p-6 lg:hidden border-t-4 border-[#e96f30]"
+                      className="fixed bottom-0 left-0 right-0 z-[60] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.2)] p-6 lg:hidden border-t-4 border-[#e96f30] gpu-accelerated"
                     >
                       <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div> {/* Drag handle indicator */}
                       <div className="flex gap-4 items-start">

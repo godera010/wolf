@@ -5,6 +5,7 @@ import Section from '../components/ui/Section';
 import { Card } from '../components/ui/card';
 import { CreditCard, Smartphone, Lock, MapPin, Calendar, User, X, ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
+import { usePerformance } from '@/hooks/usePerformance';
 
 export default function PaymentPage() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'mobile'>('card');
   const [isProcessing, setIsProcessing] = useState(false);
   const [showPaymentReview, setShowPaymentReview] = useState(false);
+  const { tier } = usePerformance();
 
   const pricePerSeat = 25;
   const totalAmount = selectedSeats.length * pricePerSeat;
@@ -349,7 +351,7 @@ export default function PaymentPage() {
       </Section>
 
       {/* Mobile Sticky Footer */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.1)] lg:hidden z-50 animate-in slide-in-from-bottom-full duration-500">
+      <div className={`fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.1)] lg:hidden z-50 gpu-accelerated ${tier === 'low' ? '' : tier === 'mid' ? 'animate-in fade-in duration-150' : 'animate-in slide-in-from-bottom-full duration-500'}`}>
         <div className="flex items-center justify-between gap-4 max-w-md mx-auto">
           <div>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total to Pay</p>
@@ -373,11 +375,11 @@ export default function PaymentPage() {
       </div>
 
       {/* Mobile Confirm Payment Modal / Checkout Summary */}
-          {showPaymentReview && (
-            <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-              <div className="absolute inset-0 bg-black/60 transition-opacity" onClick={() => setShowPaymentReview(false)} />
-      
-              <div className="relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom-full duration-300">            {/* Header */}
+      {showPaymentReview && (
+        <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="absolute inset-0 bg-black/60 transition-opacity" onClick={() => setShowPaymentReview(false)} />
+
+          <div className={`relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl gpu-accelerated ${tier === 'low' ? '' : tier === 'mid' ? 'animate-in fade-in duration-150' : 'animate-in slide-in-from-bottom-full duration-300'}`}>            {/* Header */}
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
               <h3 className="font-['Montserrat',sans-serif] font-bold text-base text-primary">Order Summary</h3>
               <button onClick={() => setShowPaymentReview(false)} className="p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">
@@ -462,9 +464,9 @@ export default function PaymentPage() {
         </div>
       )}
       {/* Processing Overlay */}
-          {isProcessing && (
-            <div className="fixed inset-0 z-[70] bg-white flex flex-col items-center justify-center animate-in fade-in duration-200">
-              <div className="relative">            <div className="w-20 h-20 border-4 border-slate-100 rounded-full" />
+      {isProcessing && (
+        <div className="fixed inset-0 z-[70] bg-white flex flex-col items-center justify-center animate-in fade-in duration-200">
+          <div className="relative">            <div className="w-20 h-20 border-4 border-slate-100 rounded-full" />
             <div className="absolute top-0 left-0 w-20 h-20 border-secondary border-t-transparent rounded-full animate-spin" />
             <Lock className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary" size={24} />
           </div>

@@ -4,6 +4,7 @@ import BookingSteps from '../components/BookingSteps';
 import Section from '../components/ui/Section';
 import { Card } from '../components/ui/card';
 import { ChevronRight, Mail, Phone, CreditCard, MapPin, Calendar, X } from 'lucide-react';
+import { usePerformance } from '@/hooks/usePerformance';
 
 interface Passenger {
   seatNumber: number;
@@ -57,6 +58,7 @@ export default function PassengerInfoPage() {
   });
 
   const [showMobileConfirm, setShowMobileConfirm] = useState(false);
+  const { tier } = usePerformance();
 
   const handlePassengerChange = (index: number, field: keyof Passenger, value: any) => {
     const updatedPassengers = [...passengers];
@@ -385,7 +387,7 @@ export default function PassengerInfoPage() {
       </Section>
 
       {/* Mobile Sticky Footer */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.1)] lg:hidden z-50 animate-in slide-in-from-bottom-full duration-500">
+      <div className={`fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-100 shadow-[0_-5px_20px_-5px_rgba(0,0,0,0.1)] lg:hidden z-50 gpu-accelerated ${tier === 'low' ? '' : tier === 'mid' ? 'animate-in fade-in duration-150' : 'animate-in slide-in-from-bottom-full duration-500'}`}>
         <div className="flex items-center justify-between gap-4 max-w-md mx-auto">
           <div>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">Total Amount</p>
@@ -402,11 +404,11 @@ export default function PassengerInfoPage() {
         </div>
       </div>
       {/* Mobile Confirmation Modal */}
-          {showMobileConfirm && (
-            <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-              <div className="absolute inset-0 bg-black/60 transition-opacity" onClick={() => setShowMobileConfirm(false)} />
-      
-              <div className="relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom-full duration-300">            {/* Header */}
+      {showMobileConfirm && (
+        <div className="fixed inset-0 z-[60] lg:hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="absolute inset-0 bg-black/60 transition-opacity" onClick={() => setShowMobileConfirm(false)} />
+
+          <div className={`relative bg-white w-full max-w-sm sm:rounded-2xl rounded-t-2xl shadow-2xl gpu-accelerated ${tier === 'low' ? '' : tier === 'mid' ? 'animate-in fade-in duration-150' : 'animate-in slide-in-from-bottom-full duration-300'}`}>            {/* Header */}
             <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50 rounded-t-2xl">
               <h3 className="font-['Montserrat',sans-serif] font-bold text-base text-primary">Review Details</h3>
               <button onClick={() => setShowMobileConfirm(false)} className="p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors">

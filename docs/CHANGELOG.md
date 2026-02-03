@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-02-03
+
+### Added
+- **3-Tier Performance Optimization:**
+  - New `usePerformance` hook detects device capability (HIGH/MID/LOW).
+  - Tier detection based on CPU cores, RAM, Android version, and `prefers-reduced-motion`.
+  - HIGH tier: Full animations with springs and blur effects.
+  - MID tier: Simplified animations (150ms duration).
+  - LOW tier: Instant transitions (50ms), no blur, no slide animations.
+  - All 9 animated components updated to use tier-aware logic.
+  
+- **PDF Ticket Download (`@react-pdf/renderer`):**
+  - New `TicketPDF` component generates professional boarding passes.
+  - Landscape A4 layout matching on-screen TicketCard design.
+  - Multi-ticket support: Each ticket rendered on its own page.
+  - Download button saves PDF file directly (vs print dialog).
+  - Dynamic filename: `RoadWolf_Tickets_{count}_seats_{name}.pdf`.
+
+- **Animation Variants Utility:**
+  - New `animationVariants.ts` provides reusable tier-aware animation helpers.
+  - Functions: `getSlideIn()`, `getFadeIn()`, `getCardEntrance()`, `getModalAnimation()`.
+
+### Changed
+- **BookingSuccessPage:** Print opens dialog; Download generates PDF file.
+- **Navbar:** Mobile menu animation now tier-aware.
+- **Layout:** Background blur conditionally applied based on tier.
+- **All Booking Pages:** Modals and footers use tier-based animations.
+
 ## [0.2.3] - 2026-01-24
 
 ### Refactored

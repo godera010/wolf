@@ -86,3 +86,61 @@ To prevent accidental clicks and ensure accuracy, we implemented verification st
 
 > [!NOTE]
 > The seat buttons are Squares (`aspect-square`). Their size is determined by the screen width divided by 5 (minus gaps). This ensures they never overflow.
+
+---
+
+## 8. Performance Optimization (v0.3.0)
+
+### 3-Tier Device Detection
+The `usePerformance` hook categorizes devices into three tiers:
+
+| Tier | Detection Criteria | Animation Behavior |
+|------|-------------------|-------------------|
+| **HIGH** | 7+ CPU cores, 6GB+ RAM, Android 14+ | Full springs, blur, 500ms+ durations |
+| **MID** | 4-6 cores, 4-6GB RAM, Android 12-13 | Simplified, 150ms durations |
+| **LOW** | ≤2 cores OR <3GB RAM OR reduced motion | Instant (50ms), no blur/slide |
+
+### Components Updated
+All 9 animated components use `tier` for conditional animations:
+- Navbar, Layout, HomePage
+- BookingPage, RoutesPage, SeatSelectionPage
+- PassengerInfoPage, PaymentPage, BookingSuccessPage
+
+### Verification
+1. Open Chrome DevTools → Performance → CPU throttle (4x = MID, 6x = LOW).
+2. Verify animations adapt based on tier.
+3. Enable `prefers-reduced-motion` → verify LOW tier activates.
+
+---
+
+## 9. PDF Ticket Download (v0.3.0)
+
+### Features
+- **Landscape A4** layout matching TicketCard design.
+- **Multi-ticket support:** Each passenger gets own page.
+- **Print vs Download:**
+  - Print → Opens browser print dialog
+  - Download → Saves PDF file directly
+
+### PDF Layout
+```
+┌─────────────────────────────────────────────────────┐
+│ ROADWOLF    Boarding Pass              RW-12345     │
+├─────────────────────────────┬───────────────────────┤
+│ HARARE    →    BULAWAYO     │    SEAT: 3            │
+│ Passenger: JOHN DOE         │    FARE: $25.00       │
+│ Date: 4 Feb   Time: 08:00   │    [BARCODE]          │
+├─────────────────────────────┴───────────────────────┤
+│ roadwolfcoaches.co.zw       SUPPORT: 0788 333 430   │
+└─────────────────────────────────────────────────────┘
+```
+
+### Files
+- `src/app/components/TicketPDF.tsx` - PDF generator
+- `src/app/pages/BookingSuccessPage.tsx` - Print/Download actions
+
+### Verification
+1. Complete a booking with 2+ seats.
+2. Click "Download PDF" → verify multi-page PDF downloads.
+3. Click "Print Ticket" → verify print dialog opens.
+

@@ -8,10 +8,12 @@ const imgHero4 = () => import("@/assets/background/optimized/5.webp").then(m => 
 import { Timer, Milestone, Armchair, CircleDollarSign, Star, ArrowRight, Wifi, Zap, Wind } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, Variants } from "motion/react";
+import { usePerformance } from "@/hooks/usePerformance";
 
 export default function HomePage() {
   const [heroImages, setHeroImages] = useState<string[]>([imgHero1]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { tier } = usePerformance();
 
   // Lazy load remaining hero images after mount
   useEffect(() => {
@@ -94,24 +96,36 @@ export default function HomePage() {
     },
   ];
 
-  const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+  // 3-tier performance-optimized animation variants
+  const fadeInUp: Variants = tier === 'low'
+    ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.05 } }
     }
-  };
-
-  const staggerContainer: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
+    : tier === 'mid'
+      ? {
+        hidden: { opacity: 0, y: 15 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } }
       }
+      : {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+      };
+
+  const staggerContainer: Variants = tier === 'low'
+    ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.05 } }
     }
-  };
+    : tier === 'mid'
+      ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+      }
+      : {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+      };
 
   return (
     <div className="bg-white">
@@ -135,7 +149,7 @@ export default function HomePage() {
           }
           .animate-marquee {
             display: inline-block;
-            animation: marquee 30s linear infinite;
+            animation: marquee ${tier === 'low' ? '60s' : tier === 'mid' ? '40s' : '30s'} linear infinite;
           }
           .animate-marquee:hover {
             animation-play-state: paused;

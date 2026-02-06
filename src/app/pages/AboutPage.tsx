@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Target, Eye, Shield, Bus, MapPin, Users, Heart, Clock, Award } from 'lucide-react';
-import imgHero from '@/assets/background/4.webp';
+import imgHero from '@/assets/background page.webp';
 
 export default function AboutPage() {
     const containerVariants = {

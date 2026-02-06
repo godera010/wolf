@@ -1,36 +1,11 @@
 import { Link } from 'react-router-dom';
-// Eagerly load first hero image for LCP
-import imgHero1 from "@/assets/background/optimized/7.webp";
-// Lazy load remaining hero images
-const imgHero2 = () => import("@/assets/background/optimized/3.webp").then(m => m.default);
-const imgHero3 = () => import("@/assets/background/optimized/4.webp").then(m => m.default);
-const imgHero4 = () => import("@/assets/background/optimized/5.webp").then(m => m.default);
+import imgHero from "@/assets/home background.webp";
 import { Timer, Milestone, Armchair, CircleDollarSign, Star, ArrowRight, Wifi, Zap, Wind } from 'lucide-react';
-import { useState, useEffect } from 'react';
 import { motion, Variants } from "motion/react";
 import { usePerformance } from "@/hooks/usePerformance";
 
 export default function HomePage() {
-  const [heroImages, setHeroImages] = useState<string[]>([imgHero1]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { tier } = usePerformance();
-
-  // Lazy load remaining hero images after mount
-  useEffect(() => {
-    Promise.all([imgHero2(), imgHero3(), imgHero4()]).then(([img2, img3, img4]) => {
-      setHeroImages([imgHero1, img2, img3, img4]);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (heroImages.length < 2) return; // Don't start carousel until images are loaded
-
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
-    }, 4000); // Change image every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [heroImages]);
 
   const features = [
     {
@@ -127,70 +102,105 @@ export default function HomePage() {
         visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
       };
 
+  // Hero text stagger animation
+  const heroTextVariants: Variants = tier === 'low'
+    ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.1 } }
+    }
+    : tier === 'mid'
+      ? {
+        hidden: { opacity: 0, x: -30 },
+        visible: { opacity: 1, x: 0, transition: { type: "tween", duration: 0.4 } }
+      }
+      : {
+        hidden: { opacity: 0, x: -50 },
+        visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 50 } }
+      };
+
+  const heroContainerVariants: Variants = tier === 'low'
+    ? {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.1 } }
+    }
+    : {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: tier === 'mid' ? 0.15 : 0.3,
+          delayChildren: tier === 'mid' ? 0.1 : 0.2
+        }
+      }
+    };
+
   return (
     <div className="bg-white">
-      {/* Scrolling Text Banner */}
-      <div className="bg-transparent text-white py-3 overflow-hidden whitespace-nowrap border-b border-white/10 absolute top-0 left-0 right-0 z-20">
-        <div className="animate-marquee inline-block">
-          <span className="mx-4 text-sm md:text-base font-medium">
-            Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
-          </span>
-          <span className="mx-4 text-sm md:text-base font-medium">
-            • Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
-          </span>
-          <span className="mx-4 text-sm md:text-base font-medium">
-            • Experience the new standard of bus travel with reliable daily schedules between Harare, Bulawayo, and Victoria Falls.
-          </span>
+      {/* Hero Section - Full Screen with Single Image */}
+      <section className="relative min-h-[600px] md:min-h-[calc(100vh-80px)] overflow-hidden bg-[#00154d]">
+        {/* Background Image with Subtle Zoom Animation */}
+        <div className="absolute inset-0 w-full h-full">
+          <motion.img
+            initial={tier === 'low' ? {} : { scale: 1 }}
+            animate={tier === 'low' ? {} : { scale: 1.05 }}
+            transition={tier === 'low' ? {} : {
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "linear"
+            }}
+            src={imgHero}
+            alt="RoadWolf Coach"
+            className="absolute w-full h-full object-cover object-center"
+          />
+          {/* Gradient Overlay for Text Readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#01257d]/85 via-[#01257d]/50 to-transparent" />
         </div>
-        <style>{`
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-33.33%); }
-          }
-          .animate-marquee {
-            display: inline-block;
-            animation: marquee ${tier === 'low' ? '60s' : tier === 'mid' ? '40s' : '30s'} linear infinite;
-          }
-          .animate-marquee:hover {
-            animation-play-state: paused;
-          }
-        `}</style>
-      </div>
 
-      {/* Hero Section */}
-      <section className="relative min-h-[400px] md:min-h-[calc(100vh-104px)] overflow-hidden flex items-center justify-center py-8 md:py-12">
-        <div className="absolute inset-0 z-0">
-          {heroImages.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`RoadWolf Coach ${index + 1}`}
-              width={index === 0 ? 1000 : 800}
-              height={index === 0 ? 700 : 600}
-              loading={index === 0 ? "eager" : "lazy"}
-              className={`absolute inset-0 w-full h-full md:object-cover object-cover transform md:scale-105 transition-opacity duration-[2000ms] ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-                }`}
-            />
-          ))}
-        </div>          {/* Enhanced Overlay */}
-        {/* Full Coverage Overlay - Edge to Edge */}
-        <div className="absolute inset-0 z-10 bg-black/40 flex flex-col items-center justify-center gap-6 md:gap-8 px-4">
-          {/* Content Container */}
-          <div className="p-6 md:p-12 w-full max-w-4xl text-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <h1 className="font-black text-2xl md:text-4xl lg:text-5xl text-white mb-6 md:mb-8 leading-[1.1] drop-shadow-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">              Ride with the Pack – <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white">
-                Travel Smarter, Faster, Wilder
-              </span>
-            </h1>
-
-            <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
-              <Link
-                to="/booking"
-                className="group w-auto relative inline-flex items-center justify-center bg-[#d84315] hover:bg-[#bf360c] text-white font-bold text-lg md:text-xl px-8 md:px-10 py-3 md:py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(216,67,21,0.5)] hover:shadow-[0_0_30px_rgba(216,67,21,0.7)] hover:-translate-y-1 active:scale-95"
+        {/* Hero Content - Left Aligned */}
+        <div className="absolute inset-0 flex items-center">
+          <div className="container mx-auto px-6 md:px-12">
+            <div className="max-w-2xl">
+              <motion.h1
+                initial="hidden"
+                animate="visible"
+                variants={heroContainerVariants}
+                className="font-['Montserrat',sans-serif] font-black text-4xl md:text-5xl lg:text-6xl text-white leading-tight drop-shadow-lg"
               >
-                <span>Book a seat now</span>
-                <ArrowRight className="ml-3 w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <motion.span className="block" variants={heroTextVariants}>
+                  Ride with the Pack –
+                </motion.span>
+                <motion.span className="block text-[#e96f30]" variants={heroTextVariants}>
+                  Travel Smarter,
+                </motion.span>
+                <motion.span className="block" variants={heroTextVariants}>
+                  Faster, Wilder
+                </motion.span>
+              </motion.h1>
+
+              <motion.p
+                initial={tier === 'low' ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={tier === 'low' ? { duration: 0.1, delay: 0.3 } : { delay: 1, duration: 0.6 }}
+                className="text-white/80 text-lg md:text-xl mt-6 max-w-lg font-['Montserrat',sans-serif]"
+              >
+                Premium coach services connecting Zimbabwe's major cities with comfort, safety, and reliability.
+              </motion.p>
+
+              <motion.div
+                initial={tier === 'low' ? { opacity: 0 } : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={tier === 'low' ? { duration: 0.1, delay: 0.4 } : { delay: 1.2, duration: 0.8 }}
+                className="mt-10"
+              >
+                <Link
+                  to="/booking"
+                  className="group inline-flex items-center bg-[#e96f30] text-white font-['Montserrat',sans-serif] font-bold text-lg px-8 py-4 rounded-full shadow-lg border-2 border-[#e96f30] hover:bg-[#d85e20] hover:shadow-[0_0_25px_rgba(233,111,48,0.5)] transition-all duration-300 hover:-translate-y-1"
+                >
+                  <span>Book a Seat Now</span>
+                  <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -242,7 +252,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Onboard Amenities Section (Replaces Popular Routes) */}
+      {/* Onboard Amenities Section */}
       <section className="py-16 bg-white relative">
         <div className="container mx-auto px-4">
           <motion.div
@@ -296,7 +306,7 @@ export default function HomePage() {
 
       {/* Testimonials Section */}
       <section className="py-16 bg-slate-50 relative overflow-hidden">
-        {/* Background Blobs (Inverted positions) */}
+        {/* Background Blobs */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
           <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-orange-100/40 rounded-full blur-3xl" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-100/30 rounded-full blur-3xl" />

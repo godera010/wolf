@@ -3,25 +3,28 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 // Import images from assets
-import img1 from '@/assets/image4.webp';
-import img2 from '@/assets/image5.webp';
-import img3 from '@/assets/image6.webp';
-import img4 from '@/assets/image10.webp';
-import img5 from '@/assets/image11.webp';
-import img6 from '@/assets/imag12.webp';
-import img7 from '@/assets/image7.webp';
-import img8 from '@/assets/image1.webp';
+import imgBackground from '@/assets/background page.webp';
+import imgExterior from '@/assets/gallery/exterior.webp';
+import imgTerminal from '@/assets/gallery/terminal.webp';
+import imgInterior from '@/assets/gallery/interior.webp';
+import imgSeats from '@/assets/gallery/seats.webp';
+import imgOnTheRoad from '@/assets/gallery/on the road.webp';
+import imgCheckIn from '@/assets/gallery/check in.webp';
+import imgDrivers from '@/assets/gallery/experienced drivers.webp';
+import imgLuxury from '@/assets/gallery/luxury experience.webp';
+import imgOffices from '@/assets/gallery/offices.webp';
 
 export default function GalleryPage() {
   const images = [
-    { src: img1, alt: "Luxury Coach Exterior", category: "Fleet" },
-    { src: img2, alt: "Bus Terminal", category: "Terminals" },
-    { src: img3, alt: "Comfortable Seating", category: "Interior" },
-    { src: img4, alt: "Night Travel", category: "Fleet" },
-    { src: img5, alt: "On the Road", category: "Travel" },
-    { src: img6, alt: "Happy Passengers", category: "Community" },
-    { src: img7, alt: "Safe Travel", category: "Safety" },
-    { src: img8, alt: "RoadWolf Experience", category: "Lifestyle" },
+    { src: imgExterior, alt: "Luxury Coach Exterior", category: "Fleet" },
+    { src: imgTerminal, alt: "Bus Terminal", category: "Terminals" },
+    { src: imgInterior, alt: "Comfortable Interior", category: "Interior" },
+    { src: imgSeats, alt: "Premium Seating", category: "Interior" },
+    { src: imgOnTheRoad, alt: "On the Road", category: "Travel" },
+    { src: imgCheckIn, alt: "Check-In Experience", category: "Service" },
+    { src: imgDrivers, alt: "Experienced Drivers", category: "Safety" },
+    { src: imgLuxury, alt: "Luxury Experience", category: "Lifestyle" },
+    { src: imgOffices, alt: "Office Locations", category: "Offices" },
   ];
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -80,7 +83,7 @@ export default function GalleryPage() {
         {/* Instagram CTA - Parallax Style */}
         <section
           className="py-20 text-white relative overflow-hidden bg-fixed bg-cover bg-center"
-          style={{ backgroundImage: `url(${img4})` }}
+          style={{ backgroundImage: `url(${imgBackground})` }}
         >
           {/* Dark Overlay */}
           <div className="absolute inset-0 bg-[#01257d]/90 z-0"></div>
